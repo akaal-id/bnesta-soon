@@ -8,10 +8,19 @@
   height: 72px;
   align-items: center;
   justify-content: center;
-  gap: 6rem;
+  gap: 4rem;
   background: var(--bnesta-body);
   color: var(--bnesta-rice);
   flex-wrap: wrap;
+}
+
+.ctaBar::before,
+.ctaBar::after {
+  content: "";
+  height: 1.4px;      /* Thickness of the line */
+  flex: 1;          /* This forces the line to fill remaining space */
+  background-color: var(--bnesta-volcanic); /* Dark line color matching image */
+  opacity: 0.6;     /* Optional: to make it look subtle */
 }
 
 .ctaLink {
@@ -29,12 +38,12 @@
   display: flex;
   justify-content: space-between;
   gap: 2.5rem;
-  padding: 4rem 1.5rem 2rem;
+  padding: 4rem 2rem 2rem;
 }
 
 .address {
   font-family: var(--font-mulish);
-  font-size: 14px;
+  font-size: 1rem;
   color: var(--bnesta-deep-espresso);
   margin-top: 1rem;
   max-width: 300px;
@@ -58,8 +67,11 @@
 }
 .contactItem {
   font-family: var(--font-mulish);
-  font-size: 14px;
+  font-size: 1rem;
   color: var(--bnesta-deep-espresso);
+}
+.contactItem:hover {
+  color: var(--bnesta-ochre);
 }
 
 .columnHeading {
@@ -78,7 +90,8 @@
 .newsletter {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  justify-content: space-between;
+  width: 540px;;
 }
 
 .newsletterTitle {
@@ -124,7 +137,7 @@
 
 .bottomBar {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   border-top: 1px solid var(--bnesta-rice);
   text-align: center;
   
@@ -159,4 +172,3 @@
     width: 100%;
   }
 }
-

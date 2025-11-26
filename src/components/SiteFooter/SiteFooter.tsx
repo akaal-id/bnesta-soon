@@ -18,13 +18,6 @@ const ctaLinks = [
   { Label: "BLive" }
 ];
 
-// 2. We map the string labels to the actual React components
-const socialIcons = [
-  { Label: "Facebook", Icon: Facebook },
-  { Label: "Instagram", Icon: Instagram },
-  { Label: "Linkedin", Icon: Linkedin }
-];
-
 export function SiteFooter() {
   return (
     <footer className={styles.footer}>
@@ -55,42 +48,26 @@ export function SiteFooter() {
             </a>
           </p>
           <div className={styles.contact}>
-            <a href="https://wa.me/+62817797908" className="inline-flex items-center gap-4">
-              <MessageSquare className="w-4 h-4" />
-              +62 817-797-908
+            <a 
+             href="https://instagram.com/bnesta.kerobokan"
+             target="_blank" 
+             rel="noopener noreferrer"
+             className={`${styles.contactItem} inline-flex items-center gap-4`}
+             >
+             <Instagram className="w-4 h-4" />
+             @bnesta.kerobokan
             </a>
-            <a href="mailto:bnesta.bali@gmail.com" className="inline-flex items-center gap-4">
+            <a href="mailto:hello@bnesta.id"
+              className={`${styles.contactItem} inline-flex items-center gap-4`}>
               <Mail className="w-4 h-4" />
-              bnesta.bali@gmail.com
+              hello@bnesta.id
             </a>
-          </div>
-        </div>
-
-        <div>
-          <p className={styles.columnHeading}>Quick Links</p>
-          <div className={styles.linkList}>
-            {quickLinks.map((link) => (
-              <a key={link} href="#">
-                {link}
-              </a>
-            ))}
-          </div>
-        </div>
-
-        <div>
-          <p className={styles.columnHeading}>Legal</p>
-          <div className={styles.linkList}>
-            {legalLinks.map((link) => (
-              <a key={link} href="#">
-                {link}
-              </a>
-            ))}
           </div>
         </div>
 
         <div className={styles.newsletter}>
           <h5 className={styles.newsletterTitle}>
-            <em>Get a offer<span className="font-semibold"> newsletter</span></em>
+            <em>Be part of the living journey that<span className="font-semibold"><br/>begins at BNesta</span></em>
           </h5>
           <div className={styles.inputRow}>
             <input type="email" placeholder="Enter your email" />
@@ -102,14 +79,6 @@ export function SiteFooter() {
       </div>
 
       <div className={styles.bottomBar}>
-        <div className={styles.socialIcons}>
-          {/* 3. Render the Icon component stored in the object */}
-          {socialIcons.map((item) => (
-            <a key={item.Label} href="#" className={styles.socialIcon}>
-              <item.Icon size={20} />
-            </a>
-          ))}
-        </div>
         <div className={styles.copyrightText}>
           2025 © BNesta Bali. All Rights Reserved.
         </div>
