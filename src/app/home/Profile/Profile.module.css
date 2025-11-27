@@ -1,156 +1,197 @@
-  .section {
-    position: relative;
-    z-index: 2;
-    padding: 12rem 1.5rem 8rem; /* Padding atas/bawah yang lega */
-    background: var(--bnesta-rice-40, #f5f3f0);
-    color: var(--bnesta-volcanic);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  /* --- IMAGE SECTION --- */
-  .imageContainer {
-    width: 100%;
-    max-width: 1200px; /* Lebar maksimal gambar agar tidak terlalu stretch di layar besar */
-    margin: 0 auto;
-    margin-bottom: 5rem; /* Jarak antara gambar dan teks di bawahnya */
-  }
-  
-  .image {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-    display: block;
-  }
-  
-  /* --- CONTENT SECTION --- */
-  .content {
-    width: 100%;
-    max-width: 1000px; /* Kontainer teks lebih sempit dari gambar agar rapi */
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  /* 1. Header Group (Garis + Eyebrow) */
-  .headerGroup {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-    margin-bottom: 1.5rem;
-    margin-left: -12rem;
-  }
-  
-  .line {
-    height: 1px;
-    width: 240px; /* Panjang garis di sebelah kiri */
-    background-color: var(--bnesta-rice-120); /* Warna garis halus */
-  }
-  
-  .eyebrow {
-    font-family: var(--font-mulish);
-    font-size: 0.8rem;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--bnesta-volcanic);
-    opacity: 0.7;
-  }
-  
-  /* 2. Heading Typography */
-  .heading {
-    font-family: var(--font-display); /* Font Lora / Serif */
-    font-size: clamp(2.5rem, 4vw, 3.5rem);
-    line-height: 1.2;
-    color: var(--bnesta-deep-espresso);
-    margin-bottom: 4rem;
-    margin-left: 4.5rem;
-    font-weight: 400; /* Regular weight untuk bagian 'Where... Meets...' */
-  }
-  
-  .heading strong {
-    font-weight: 600; /* Bold untuk bagian 'Local Warmth' */
-    color: #4a3e36; /* Sedikit lebih gelap/kontras jika perlu */
-  }
-  
-  /* 3. Grid Text 2 Kolom */
-  .textGrid {
-    display: grid;
-    grid-template-columns: 1fr 1fr; /* Membagi teks menjadi 2 kolom rata */
-    gap: 4rem; /* Jarak antar kolom */
-    margin-bottom: 5rem;
-  }
-  
-  .description {
-    font-family: var(--font-mulish);
-    font-size: 14px;
-    line-height: 1.8;
-    color: var(--bnesta-volcanic);
-    font-weight: 300;
-    opacity: 0.9;
-  }
-  
-  /* 4. Button Action */
-  .actionWrapper {
-    display: flex;
-    justify-content: center; /* Tombol di tengah sesuai gambar */
-    width: 100%;
-  }
-  
-/* --- UPDATED BUTTON (Matching your Navbar Style) --- */
-.outlineButton {
+.section {
   position: relative;
-  padding: 0.35rem 0; /* Adjusted padding for underline style */
-  padding-right: 1rem;
-  font-size: 0.95rem;
-  font-weight: 300;
-  letter-spacing: -0.2px;
-  cursor: pointer;
-  background: transparent;
-  border: none;
-  text-decoration: none;
-  color: var(--bnesta-ochre); /* Set color */
-  transition: all 0.2s cubic-bezier(0.4,0,0.2,1);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  background: var(--bnesta-rice-40, #f5f3f0);
 }
 
-/* The Sliding Underline Effect */
-.outlineButton::after {
-  content: "";
+/* Container 1: Title */
+.titleContainer {
+  width: 100%;
+  max-width: 1440px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 144px;
+  padding-bottom: 48px;
+  padding-left: 24px;
+  padding-right: 24px;
+  text-align: center;
+}
+
+.eyebrow {
+  font-family: var(--font-mulish, sans-serif);
+  font-size: clamp(12px, 3vw, 0.9rem);
+  letter-spacing: 0.6em;
+  text-transform: uppercase;
+  color: var(--bnesta-volcanic, #2c2c2c);
+  margin: 0;
+  margin-bottom: 4px;
+}
+
+.heading {
+  font-family: var(--font-display, serif);
+  font-size: clamp(1.5rem, 5vw, 3rem);
+  line-height: 1.2;
+  color: var(--bnesta-deep-espresso, #1a1a1a);
+  margin: 0;
+  font-weight: 400;
+}
+
+.heading strong {
+  font-weight: 600;
+  color: #4a3e36;
+}
+
+/* Container 2: Image Carousel */
+.imageContainer {
+  width: 100vw;
+  position: relative;
+  padding: 0;
+}
+
+.imageWrapper {
+  width: 100%;
+  height: 810px;
+  position: relative;
+  overflow: hidden;
+}
+
+.emblaContainer {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+.emblaSlide {
+  flex: 0 0 100%;
+  min-width: 0;
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+}
+
+.slideImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Ensure images cover container even when parallax scales them */
+.slideImage img {
+  width: 130% !important;
+  height: 130% !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  position: absolute !important;
+  left: -15% !important;
+  top: -15% !important;
+  right: -15% !important;
+  bottom: -15% !important;
+}
+
+/* Image Navigation */
+.imgNav {
   position: absolute;
-  left: 0;
   bottom: 0;
-  width: 0%;
-  height: 1px;
-  background-color: var(--bnesta-ochre);
-  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  left: 0;
+  right: 0;
+  width: 100%;
+  padding: 24px;
+  display: flex;
+  background: rgba(238, 236, 231, 0);
+  z-index: 10;
 }
 
-.outlineButton:hover::after {
-  width: 86%;
+.imgNavActive {
+  flex: 1;
+  height: 3px;
+  background: var(--bnesta-rice, #eeece7);
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
 }
-  
-  /* --- RESPONSIVE --- */
-  @media (max-width: 768px) {
-    .section {
-      padding: 4rem 1.5rem;
-    }
-    
-    .imageContainer {
-      margin-bottom: 3rem;
-    }
-  
-    .heading {
-      margin-bottom: 2rem;
-    }
-  
-    /* Stack grid menjadi 1 kolom di mobile */
-    .textGrid {
-      grid-template-columns: 1fr;
-      gap: 1.5rem;
-      margin-bottom: 3rem;
-    }
-    
-    .line {
-      width: 60px; /* Garis lebih pendek di mobile */
-    }
+
+.imgNavIdle {
+  flex: 1;
+  height: 3px;
+  background: rgba(238, 236, 231, 0.5);
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.imgNavActive:hover,
+.imgNavIdle:hover {
+  opacity: 0.8;
+}
+
+/* Container 3: Description */
+.descriptionContainer {
+  width: 100%;
+  max-width: 1440px;
+  padding-top: 48px;
+  padding-bottom: 144px;
+  padding-left: 24px;
+  padding-right: 24px;
+  display: flex;
+  justify-content: center;
+}
+
+.textGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+}
+
+.description {
+  font-family: var(--font-mulish, sans-serif);
+  font-size: clamp(12px, 3vw, 0.95rem);
+  line-height: 1.8;
+  color: var(--bnesta-volcanic, #2c2c2c);
+  margin: 0;
+  font-weight: 300;
+  opacity: 0.9;
+}
+
+/* --- RESPONSIVE (Tablet) --- */
+@media (max-width: 1024px) {
+  .titleContainer,
+  .descriptionContainer {
+    padding-left: 24px;
+    padding-right: 24px;
   }
+
+  .textGrid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+/* --- RESPONSIVE (Mobile) --- */
+@media (max-width: 768px) {
+  .titleContainer {
+    padding-top: 72px;
+    padding-bottom: 24px;
+  }
+
+  .descriptionContainer {
+    padding-top: 24px;
+    padding-bottom: 72px;
+  }
+
+  .imageWrapper {
+    height: 500px;
+  }
+
+  .textGrid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .heading {
+    font-size: clamp(2rem, 6vw, 3rem);
+  }
+}

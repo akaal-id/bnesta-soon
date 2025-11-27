@@ -11,7 +11,7 @@
   flex-direction: row;
   justify-content: space-between; /* Pushes columns apart */
   align-items: center; /* Vertically centers the text block relative to image */
-  gap: 6rem; /* Space between Left text and Right image */
+  gap: 3rem; /* Space between Left text and Right image */
   max-width: 1400px;
   margin: 0 auto;
 }
@@ -19,7 +19,7 @@
 /* --- LEFT COLUMN (Text) --- */
 .textColumn {
   flex: 1; /* Takes up remaining space */
-  max-width: 500px; /* Prevents text from getting too wide */
+  /*max-width: 500px; /* Prevents text from getting too wide */
   display: flex;
   flex-direction: column;
   gap: 3rem;
@@ -52,10 +52,27 @@
   /* Optional: Add a slight shadow or radius if needed, currently clean */
 }
 
-.mainMedia img {
+.mainMedia img,
+.image {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: left center; /* Use the left part of the image */
+}
+
+/* Ensure images cover container even when parallax scales them */
+/* Size image larger to account for parallax scale of 1.2 */
+.mainMedia img {
+  width: 130% !important;
+  height: 130% !important;
+  object-fit: cover !important;
+  object-position: left center !important;
+  /* Position to center the larger image */
+  position: absolute !important;
+  left: -15% !important;
+  top: -15% !important;
+  right: -15% !important;
+  bottom: -15% !important;
 }
 
 /* --- TYPOGRAPHY (Kept your exact styles) --- */
@@ -76,15 +93,20 @@
 }
 
 .introText {
-  font-family: 'Lora', serif;
+  font-family: var(--font-lora, sans-serif);
   font-style: italic;
   font-size: 1.05rem; /* Slight bump for readability */
   line-height: 1.8;
-  color: #4a4540;
+  color: var(--bnesta-volcanic, #2c2c2c);
+  font-weight: 300;
 }
 
-/* --- LIST STYLES (Kept your Zig-Zag logic) --- */
-.list {
+.introText strong {
+  font-weight: 600;
+}
+
+/* --- LIST STYLES --- */
+.listContainer {
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -92,11 +114,33 @@
   padding: 1rem 0;
 }
 
+.listRow {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  width: 100%;
+  height: 240px;
+}
+
+.itemLeft {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+}
+
+.itemRight {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+}
+
 .item {
   display: flex;
-  align-items: baseline;
+  align-items: flex-start;
   gap: 1rem;
-  width: fit-content;
+  width: 100%;
   transition: transform 0.8s ease;
 }
 
@@ -104,28 +148,38 @@
   transform: translateY(-12px);
 }
 
-/* The Zig-Zag Magic */
-.item:nth-child(even) {
-  margin-left: auto; 
-}
-.item:nth-child(odd) {
-  margin-right: auto;
-}
-
 .number {
   font-family: var(--font-display);
   font-size: 2rem;
   line-height: 1;
   color: #dcd6cf;
+  flex-shrink: 0;
+}
+
+.labelContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+  flex: 1;
 }
 
 .label {
   font-family: var(--font-mulish);
   font-size: 1rem;
+  font-weight: 600;
   color: var(--bnesta-volcanic);
   padding-bottom: 8px;
   border-bottom: 1px solid #dcd6cf;
-  min-width: 180px;
+}
+
+.description {
+  font-family: var(--font-mulish);
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--bnesta-volcanic);
+  opacity: 0.8;
+  font-weight: 300;
 }
 
 /* --- FOOTER & BUTTON --- */
@@ -141,6 +195,11 @@
   font-weight: 300;
   color: var(--bnesta-volcanic);
   max-width: 100%;
+  line-height: 1.6;
+}
+
+.footerText strong {
+  font-weight: 600;
 }
 
 .outlineButton {
@@ -193,8 +252,13 @@
     padding: 4rem 1.5rem;
   }
   
-  /* Reset zig-zag on small screens if desired */
-  .item:nth-child(even) {
-    margin-left: 0;
+  .listRow {
+    flex-direction: column;
+    gap: 2rem;
+  }
+  
+  .itemLeft,
+  .itemRight {
+    align-items: flex-start;
   }
 }
