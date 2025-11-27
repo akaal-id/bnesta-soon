@@ -20,7 +20,7 @@ export function Location() {
         <p className={styles.eyebrow}>Our Location</p>
         <h4 className={styles.title}>Kerobokan, Bali</h4>
         <span className={styles.divider} />
-        <p>
+        <p className={styles.description}>
         Jl. Tunjung I, Kerobokan Kelod, Kec. Kuta Utara, Kabupaten Badung, Bali 80117
         </p>
         <a className={buttonStyles.outlineButton} href="#">

@@ -2,25 +2,17 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
-import Image from "next/image";
 import styles from "./Profile.module.css";
+import { VillaCard } from "@/components/VillaCard/VillaCard";
+import { villaData } from "@/data/villaImages";
 
 const SLIDE_DURATION_MS = 5000; // 5 seconds
-
-const backgroundImages = [
-  "/images/Matahari1.png",
-  "/images/cahaya1.png",
-  "/images/mahakarya1.png",
-  "/images/svarga1.png",
-] as const;
 
 export function Profile() {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
   const [currentIndex, setCurrentIndex] = useState(0);
-  const totalImages = backgroundImages.length;
+  const totalImages = villaData.length;
   const autoPlayIntervalRef = useRef<NodeJS.Timeout | null>(null);
-  const imageWrapperRef = useRef<HTMLDivElement | null>(null);
-  const parallaxInstancesRef = useRef<any[]>([]);
 
   const onSelect = useCallback(() => {
     if (!emblaApi) return;
@@ -61,53 +53,6 @@ export function Profile() {
     };
   }, [emblaApi, startAutoPlay]);
 
-  // Initialize parallax effect
-  useEffect(() => {
-    // Clean up existing parallax instances
-    parallaxInstancesRef.current.forEach((instance) => {
-      if (instance && typeof instance.destroy === "function") {
-        instance.destroy();
-      }
-    });
-    parallaxInstancesRef.current = [];
-
-    // Wait for images to be rendered, then initialize parallax
-    const timeoutId = setTimeout(async () => {
-      if (imageWrapperRef.current) {
-        // Dynamically import SimpleParallax only in the browser
-        // @ts-ignore - simple-parallax-js/vanilla doesn't have type definitions
-        const SimpleParallax = (await import("simple-parallax-js/vanilla")).default;
-        
-        // Query for img elements within the container (Next.js Image renders as img)
-        const imgElements = imageWrapperRef.current.querySelectorAll(
-          "img"
-        ) as NodeListOf<HTMLImageElement>;
-
-        imgElements.forEach((imgElement) => {
-          if (imgElement) {
-            const parallax = new SimpleParallax(imgElement, {
-              orientation: "up",
-              scale: 1.2,
-              delay: 4,
-            });
-            parallaxInstancesRef.current.push(parallax);
-          }
-        });
-      }
-    }, 100); // Small delay to ensure images are rendered
-
-    // Cleanup on unmount
-    return () => {
-      clearTimeout(timeoutId);
-      parallaxInstancesRef.current.forEach((instance) => {
-        if (instance && typeof instance.destroy === "function") {
-          instance.destroy();
-        }
-      });
-      parallaxInstancesRef.current = [];
-    };
-  }, [currentIndex]); // Re-initialize when slide changes
-
   // Handle indicator click
   const handleIndicatorClick = useCallback(
     (index: number) => {
@@ -136,23 +81,16 @@ export function Profile() {
       {/* Container 2: Image Carousel */}
       <div className={styles.imageContainer}>
         <div className={styles.imageWrapper} ref={emblaRef}>
-          <div className={styles.emblaContainer} ref={imageWrapperRef}>
-            {backgroundImages.map((image, index) => (
-              <div key={image} className={styles.emblaSlide}>
-                <Image
-                  src={image}
-                  alt="BNesta villa"
-                  fill
-                  className={styles.slideImage}
-                  priority={index === 0}
-                  sizes="100vw"
-                />
+          <div className={styles.emblaContainer}>
+            {villaData.map((villa, index) => (
+              <div key={villa.id} className={styles.emblaSlide}>
+                <VillaCard villa={villa} priority={index === 0} />
               </div>
             ))}
           </div>
           {/* Image Navigation */}
           <div className={styles.imgNav}>
-            {backgroundImages.map((_, index) => (
+            {villaData.map((_, index) => (
               <div
                 key={index}
                 className={

@@ -1,0 +1,131 @@
+.cardContainer {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.imageWrapper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.slideImage {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  z-index: 0;
+}
+
+.slideImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.gradientOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.0) 0%,
+    rgba(0, 0, 0, 0.1) 30%,
+    rgba(0, 0, 0, 0.1) 60%,
+    rgba(0, 0, 0, 0.1) 70%,
+    rgba(0, 0, 0, 0.0) 100%
+  );
+  z-index: 1;
+  pointer-events: none;
+}
+
+.textOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 48px;
+  pointer-events: none;
+  gap: 1rem;
+}
+
+.bedroomType {
+  font-family: var(--font-mulish, sans-serif);
+  font-weight: 600;
+  font-size: clamp(12px, 3vw, 1rem);
+  letter-spacing: 0.6em;
+  text-transform: uppercase;
+  color: var(--bnesta-rice, #eeece7);
+  margin: 0;
+  align-self: center;
+  text-align: center;
+}
+
+.villaName {
+  font-family: var(--font-display, serif);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--bnesta-rice, #eeece7);
+  margin: 0;
+  align-self: center;
+  text-align: center;
+}
+
+.description {
+  font-family: var(--font-mulish, sans-serif);
+  font-size: clamp(12px, 2.5vw, 16px);
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--bnesta-rice, #eeece7);
+  margin: 0;
+  text-align: center;
+  max-width: 320px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* --- RESPONSIVE (Tablet) --- */
+@media (max-width: 1024px) {
+  .textOverlay {
+    padding: 40px;
+  }
+
+  .description {
+    max-width: 70%;
+  }
+}
+
+/* --- RESPONSIVE (Mobile) --- */
+@media (max-width: 768px) {
+  .textOverlay {
+    padding: 24px;
+    gap: 0.75rem;
+  }
+
+  .bedroomType {
+    font-size: clamp(10px, 2.5vw, 12px);
+    letter-spacing: 0.4em;
+  }
+
+  .villaName {
+    font-size: clamp(1.5rem, 6vw, 2.5rem);
+  }
+
+  .description {
+    font-size: clamp(12px, 3vw, 14px);
+    max-width: 80%;
+    text-align: center;
+  }
+}
+

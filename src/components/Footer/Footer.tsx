@@ -55,13 +55,13 @@ export function Footer() {
              href="https://instagram.com/bnesta.kerobokan"
              target="_blank" 
              rel="noopener noreferrer"
-             className={`${styles.contactItem} inline-flex items-center gap-4`}
+             className={styles.contactItem}
              >
              <Instagram className="w-4 h-4" />
              @bnesta.kerobokan
             </a>
             <a href="mailto:hello@bnesta.id"
-              className={`${styles.contactItem} inline-flex items-center gap-4`}>
+              className={styles.contactItem}>
               <Mail className="w-4 h-4" />
               hello@bnesta.id
             </a>

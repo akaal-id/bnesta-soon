@@ -1,80 +1,98 @@
+"use client";
+
+import { useEffect, useRef } from "react";
 import Image from "next/image";
 import styles from "./CommonSpaces.module.css";
 
-const spaces = [
-  {
-    title: "Spa & Wellness",
-    description:
-      "Dedicated rooms for guided breathwork, massage, and restorative spa rituals curated by BLife therapists.",
-    image: "/images/villa-2.jpg",
-    width: 1200,
-    height: 1200,
-  },
-  {
-    title: "Co-working Studio",
-    description:
-      "Acoustically balanced spaces with natural light, perfect for mindful productivity and intimate workshops.",
-    image: "/images/villa-3.jpg",
-    width: 940,
-    height: 705,
-  },
-  {
-    title: "Surf & Shoreline",
-    description:
-      "Sunrise surf mentoring at Batu Bolong, followed by grounding tea ceremonies back at the villa.",
-    image: "/images/villa-1.jpg",
-    width: 1132,
-    height: 1649,
-  },
-  {
-    title: "Gathering Table",
-    description:
-      "Chef-led communal dining where nourishment is slow, seasonal, and deeply connective.",
-    image: "/images/story.png",
-    width: 2910,
-    height: 1722,
-  },
-];
-
 export function CommonSpaces() {
+  const imageWrapperRef = useRef<HTMLDivElement | null>(null);
+  const parallaxInstancesRef = useRef<any[]>([]);
+
+  // Initialize parallax effect
+  useEffect(() => {
+    // Clean up existing parallax instances
+    parallaxInstancesRef.current.forEach((instance) => {
+      if (instance && typeof instance.destroy === "function") {
+        instance.destroy();
+      }
+    });
+    parallaxInstancesRef.current = [];
+
+    // Wait for images to be rendered, then initialize parallax
+    const timeoutId = setTimeout(async () => {
+      if (imageWrapperRef.current) {
+        // Dynamically import SimpleParallax only in the browser
+        // @ts-ignore - simple-parallax-js/vanilla doesn't have type definitions
+        const SimpleParallax = (await import("simple-parallax-js/vanilla")).default;
+        
+        // Query for img elements within the container (Next.js Image renders as img)
+        const imgElements = imageWrapperRef.current.querySelectorAll(
+          "img"
+        ) as NodeListOf<HTMLImageElement>;
+
+        imgElements.forEach((imgElement) => {
+          if (imgElement) {
+            const parallax = new SimpleParallax(imgElement, {
+              orientation: "up",
+              scale: 1.2,
+              delay: 4,
+            });
+            parallaxInstancesRef.current.push(parallax);
+          }
+        });
+      }
+    }, 100); // Small delay to ensure images are rendered
+
+    // Cleanup on unmount
+    return () => {
+      clearTimeout(timeoutId);
+      parallaxInstancesRef.current.forEach((instance) => {
+        if (instance && typeof instance.destroy === "function") {
+          instance.destroy();
+        }
+      });
+      parallaxInstancesRef.current = [];
+    };
+  }, []);
+
   return (
     <section className={styles.section}>
       <div className={styles.layout}>
-        <div className={styles.stickyCol}>
-          <h4 className={styles.heading}>
-            Explore the vibrant{" "}
-            <em>Common Spaces of BNesta Villas</em>
-          </h4>
-          <p>
-            Discover lively communal areas where thoughtful design and
-            comfort create the perfect atmosphere for restoring energy and
-            meaningful connection.
-          </p>
-          <a className={styles.link} href="#">
-            Explore More →
-          </a>
+        {/* Left: Large Image */}
+        <div className={styles.imageColumn}>
+          <div className={styles.mainMedia} ref={imageWrapperRef}>
+            <Image
+              src="/images/yoga1.png"
+              alt="Yoga and meditation studio at BNesta"
+              width={1200}
+              height={800}
+              sizes="(max-width: 900px) 100vw, 60vw"
+              priority
+              className={styles.image}
+            />
+          </div>
         </div>
 
-        <div className={styles.grid}>
-          {spaces.map((space) => (
-            <article key={space.title} className={styles.card}>
-              <div className={styles.media}>
-                <Image
-                  src={space.image}
-                  alt={space.title}
-                  width={space.width}
-                  height={space.height}
-                />
+        {/* Right: Text Content */}
+        <div className={styles.textColumn}>
+          <div className={styles.content}>
+            <p className={styles.eyebrow}>THE EXPERIENCE</p>
+            <h2 className={styles.title}>Effortless, Private Living</h2>
+            <div className={styles.divider}></div>
+            
+            <div className={styles.textColumns}>
+              <div className={styles.textColumnLeft}>
+                <p>
+                  The BNesta experience feels quiet and intuitive. Check in is smooth, guidance is digital, and the villa responds softly to your presence. Lighting adjusts as the day changes, scent stays gentle, and the atmosphere remains calm without effort. The space is planned to reduce noise, visual clutter, and unnecessary movement so your mind stays clear.
+                </p>
               </div>
-              <div>
-                <h5 className={styles.title}>{space.title}</h5>
-                <p>{space.description}</p>
-                <a className={styles.metaLink} href="#">
-                  See Detail →
-                </a>
+              <div className={styles.textColumnRight}>
+                <p>
+                  Inside the villa, comfort is arranged with care. Premium bedding supports deep rest, while hands-free controls allow you to shape the environment with simple voice commands. Preferences prepared before arrival make the stay feel personal and familiar from the start. Service steps back, privacy stays at the center, and the villa becomes a place where you can live lightly and reconnect with yourself.
+                </p>
               </div>
-            </article>
-          ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>

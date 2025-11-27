@@ -40,12 +40,12 @@
   color: var(--bnesta-body);
   letter-spacing: 0.4em;
   text-transform: uppercase;
-  font-size: 0.8rem;
+  font-size: clamp(12px, 3vw, 0.9rem);
 }
 
 .title {
   font-family: var(--font-display);
-  font-size: clamp(2rem, 3vw, 3rem);
+  font-size: clamp(2rem, 6vw, 3rem);
   margin-bottom: 1rem;
   line-height: 3rem;
 }
@@ -55,6 +55,15 @@
   width: 100%;
   background: var(--bnesta-rice-120);
   margin: 0.5rem 0;
+}
+
+.description {
+  font-family: var(--font-mulish);
+  font-size: clamp(12px, 3vw, 16px);
+  line-height: 200%;
+  color: var(--bnesta-volcanic);
+  text-align: justify;
+  margin: 0;
 }
 
 /* --- UPDATED BUTTON (Matches your Navbar Style) --- */

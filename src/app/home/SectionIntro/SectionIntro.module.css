@@ -9,6 +9,7 @@
   padding-bottom: 144px;
   gap: 48px;
   background: var(--bnesta-rice-40, #f5f3f0);
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08);
 }
 
 /* Container 1: Image Carousel */
@@ -121,7 +122,7 @@
 
 .heading {
   font-family: var(--font-display, serif);
-  font-size: clamp(1.5rem, 5vw, 3rem);
+  font-size: clamp(2rem, 6vw, 3rem);
   line-height: 1.2;
   color: var(--bnesta-deep-espresso, #1a1a1a);
   margin: 0;
@@ -148,8 +149,8 @@
 
 .description {
   font-family: var(--font-mulish, sans-serif);
-  font-size: clamp(12px, 3vw, 0.95rem);
-  line-height: 1.8;
+  font-size: clamp(12px, 3vw, 16px);
+  line-height: 200%;
   color: var(--bnesta-volcanic, #2c2c2c);
   margin: 0;
   width: 100%;
@@ -158,9 +159,9 @@
 
 .highlight {
   font-family: var(--font-mulish, sans-serif);
-  font-size: clamp(12px, 3vw, 0.95rem);
+  font-size: clamp(12px, 3vw, 16px);
   font-weight: 700;
-  line-height: 1.8;
+  line-height: 200%;
   color: var(--bnesta-volcanic, #2c2c2c);
   margin: 0;
   width: 100%;
@@ -197,6 +198,18 @@
 
 /* --- RESPONSIVE (Tablet) --- */
 @media (max-width: 1024px) {
+  .imageContainer {
+    padding: 0;
+    width: 100%;
+  }
+
+  .imageWrapper {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    max-width: 100%;
+  }
+
   .titleContainer,
   .contentContainer,
   .bottomContainer {
@@ -222,10 +235,10 @@
     padding-right: 24px;
   }
 
-  .imageContainer {
+  .imageContainer{
     padding: 0;
   }
-
+  
   .contentContainer {
     grid-template-columns: 1fr;
     padding: 24px;
