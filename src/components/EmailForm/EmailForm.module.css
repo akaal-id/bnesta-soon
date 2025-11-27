@@ -1,0 +1,140 @@
+.emailForm {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+  padding-bottom: 0.25rem;
+  position: relative;
+  transition: border-color 0.3s ease;
+}
+
+.emailForm.error {
+  border-bottom-color: rgba(255, 100, 100, 0.6);
+}
+
+.emailInput {
+  flex: 1;
+  border: none;
+  background: transparent;
+  color: var(--bnesta-rice);
+  font-size: 0.8rem;
+  padding: 0.75rem 0;
+  transition: all 0.3s ease;
+}
+
+.emailInput::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+}
+
+.emailInput:focus {
+  outline: none;
+}
+
+.emailInput.placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.emailInput.typing {
+  color: var(--bnesta-rice);
+}
+
+.emailInput.error {
+  color: rgba(255, 100, 100, 0.9);
+  border-bottom-color: rgba(255, 100, 100, 0.6);
+}
+
+.emailInput.error::placeholder {
+  color: rgba(255, 100, 100, 0.7);
+}
+
+.submitButton {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  color: var(--bnesta-rice);
+  background: transparent;
+  font-size: 1.25rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.4s ease, color 0.4s ease, border-color 0.4s ease;
+  flex-shrink: 0;
+}
+
+.submitButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.submitButton.enabled {
+  border-color: rgba(255, 255, 255, 0.9);
+}
+
+.submitButton.enabled:hover {
+  background: var(--bnesta-rice);
+  color: #1f1a17;
+}
+
+.successMessage {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--bnesta-rice);
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  width: 100%;
+  padding: 0.75rem 0;
+  opacity: 1;
+  transition: opacity 0.5s ease-out;
+}
+
+.successMessage.fadeOut {
+  opacity: 0;
+}
+
+.fadeIn {
+  animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.checkIcon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+/* Autofill styles */
+.emailInput:-webkit-autofill,
+.emailInput:-webkit-autofill:hover,
+.emailInput:-webkit-autofill:focus,
+.emailInput:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px transparent inset !important;
+  -webkit-text-fill-color: var(--bnesta-rice) !important;
+  background-color: transparent !important;
+  background: transparent !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
