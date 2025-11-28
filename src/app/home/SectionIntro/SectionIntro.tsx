@@ -4,11 +4,12 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import Image from "next/image";
 import styles from "./SectionIntro.module.css";
+import { useFadeInOnScroll } from "@/hooks/useFadeInOnScroll";
 
 const SLIDE_DURATION_MS = 5000; // 5 seconds
 
 const backgroundImages = [
-  "/images/front1.png",
+  /*"/images/front1.png",*/
   "/images/front2.png",
 ] as const;
 
@@ -20,12 +21,14 @@ const sectionMetadata = {
 };
 
 export function SectionIntro() {
+  const { elementRef: imageContainerRef, isVisible: imageContainerVisible } = useFadeInOnScroll<HTMLDivElement>({ delay: 0 });
+  const { elementRef: titleContainerRef, isVisible: titleContainerVisible } = useFadeInOnScroll<HTMLDivElement>({ delay: 0 });
+  const { elementRef: contentContainerRef, isVisible: contentContainerVisible } = useFadeInOnScroll<HTMLDivElement>({ delay: 150 });
+  const { elementRef: bottomContainerRef, isVisible: bottomContainerVisible } = useFadeInOnScroll<HTMLDivElement>({ delay: 300 });
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
   const [currentIndex, setCurrentIndex] = useState(0);
   const totalImages = backgroundImages.length;
   const autoPlayIntervalRef = useRef<NodeJS.Timeout | null>(null);
-  const imageWrapperRef = useRef<HTMLDivElement | null>(null);
-  const parallaxInstancesRef = useRef<any[]>([]);
 
   const onSelect = useCallback(() => {
     if (!emblaApi) return;
@@ -66,53 +69,6 @@ export function SectionIntro() {
     };
   }, [emblaApi, startAutoPlay]);
 
-  // Initialize parallax effect
-  useEffect(() => {
-    // Clean up existing parallax instances
-    parallaxInstancesRef.current.forEach((instance) => {
-      if (instance && typeof instance.destroy === "function") {
-        instance.destroy();
-      }
-    });
-    parallaxInstancesRef.current = [];
-
-    // Wait for images to be rendered, then initialize parallax
-    const timeoutId = setTimeout(async () => {
-      if (imageWrapperRef.current) {
-        // Dynamically import SimpleParallax only in the browser
-        // @ts-ignore - simple-parallax-js/vanilla doesn't have type definitions
-        const SimpleParallax = (await import("simple-parallax-js/vanilla")).default;
-        
-        // Query for img elements within the container (Next.js Image renders as img)
-        const imgElements = imageWrapperRef.current.querySelectorAll(
-          "img"
-        ) as NodeListOf<HTMLImageElement>;
-
-        imgElements.forEach((imgElement) => {
-          if (imgElement) {
-            const parallax = new SimpleParallax(imgElement, {
-              orientation: "up",
-              scale: 1.2,
-              delay: 4,
-            });
-            parallaxInstancesRef.current.push(parallax);
-          }
-        });
-      }
-    }, 100); // Small delay to ensure images are rendered
-
-    // Cleanup on unmount
-    return () => {
-      clearTimeout(timeoutId);
-      parallaxInstancesRef.current.forEach((instance) => {
-        if (instance && typeof instance.destroy === "function") {
-          instance.destroy();
-        }
-      });
-      parallaxInstancesRef.current = [];
-    };
-  }, [currentIndex]); // Re-initialize when slide changes
-
   // Handle indicator click
   const handleIndicatorClick = useCallback(
     (index: number) => {
@@ -128,11 +84,14 @@ export function SectionIntro() {
   );
 
   return (
-    <section className={styles.intro}>
-      {/* Container 1: Image Carousel */}
-      <div className={styles.imageContainer}>
+    <>
+      {/* Transition Container */}
+      <div className={styles.transition}></div>
+      <section className={styles.intro}>
+        {/* Container 1: Image Carousel */}
+      <div ref={imageContainerRef} className={`${styles.imageContainer} ${imageContainerVisible ? styles.visible : ""}`}>
         <div className={styles.imageWrapper} ref={emblaRef}>
-          <div className={styles.emblaContainer} ref={imageWrapperRef}>
+          <div className={styles.emblaContainer}>
             {backgroundImages.map((image, index) => (
               <div key={image} className={styles.emblaSlide}>
                 <Image
@@ -141,7 +100,8 @@ export function SectionIntro() {
                   fill
                   className={styles.slideImage}
                   priority={index === 0}
-                  sizes="(max-width: 1440px) 100vw, 1440px"
+                  sizes="(max-width: 1200px) 100vw, 1200px"
+                  quality={95}
                 />
               </div>
             ))}
@@ -173,13 +133,13 @@ export function SectionIntro() {
       </div>
 
       {/* Container 2: Title */}
-      <div className={styles.titleContainer}>
+      <div ref={titleContainerRef} className={`${styles.titleContainer} ${titleContainerVisible ? styles.visible : ""}`}>
         <p className={styles.eyebrow}>BNESTA BALI</p>
         <h2 className={styles.heading}>A Quiet Retreat for a Steady Reset.</h2>
       </div>
 
       {/* Container 3: Content with three columns */}
-      <div className={styles.contentContainer}>
+      <div ref={contentContainerRef} className={`${styles.contentContainer} ${contentContainerVisible ? styles.visible : ""}`}>
         <div className={styles.column}>
           <span className={styles.description}>
             BNesta is a private villa retreat in Kerobokan, designed for
@@ -215,10 +175,11 @@ export function SectionIntro() {
       </div>
 
       {/* Container 4: Bottom Text */}
-      <div className={styles.bottomContainer}>
+      <div ref={bottomContainerRef} className={`${styles.bottomContainer} ${bottomContainerVisible ? styles.visible : ""}`}>
         <p className={styles.closing}>Stay in stillness. Reset in rhythm.</p>
         <p className={styles.opening}>BNesta is opening soon.</p>
       </div>
-    </section>
+      </section>
+    </>
   );
 }

@@ -166,7 +166,7 @@ export function Hero() {
           </h1>
           <p ref={subheadRef} className={styles.subhead}>
             
-            Will Open in January 2026
+            Will Open in 2026
           </p>
         </div>
 

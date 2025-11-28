@@ -73,6 +73,8 @@
   opacity: 0;
   animation: contentFade 1.8s ease forwards;
   animation-delay: 0.2s;
+  justify-content: flex-start;
+  padding-top: 24px;
 }
 
 .centerSlot {

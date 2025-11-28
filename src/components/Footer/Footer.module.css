@@ -10,7 +10,7 @@
   height: 72px;
   align-items: center;
   justify-content: center;
-  gap: 4rem;
+  gap: 2rem;
   background: var(--bnesta-body);
   color: var(--bnesta-rice);
   flex-wrap: wrap;
@@ -28,7 +28,7 @@
 
 .ctaLink {
   display: inline-flex;
-  gap: 6rem;
+  gap: 2rem;
   align-items: center;
 }
 
@@ -156,68 +156,80 @@
 .inputRow {
   display: flex;
   gap: 0;
-  border-bottom: 1px solid var(--bnesta-rice);
+  border-bottom: 1px solid rgba(60, 41, 33, 0.2);
   padding-bottom: 0;
   width: 100%;
 }
 
 .footerEmailForm {
-  display: flex;
+  display: flex !important;
   width: 100%;
   gap: 0;
-  border-bottom: none;
-  padding-bottom: 0;
+  border-bottom: none !important;
+  padding-bottom: 0 !important;
   transition: border-color 0.3s ease;
   align-items: center;
 }
 
 .footerEmailForm.error {
-  border-bottom-color: rgba(200, 50, 50, 0.6);
+  border-bottom-color: rgba(200, 50, 50, 0.6) !important;
 }
 
 .footerEmailInput {
   flex: 1;
-  background: transparent;
-  border: none;
-  padding: 0.75rem 0.5rem;
+  background: transparent !important;
+  border: none !important;
+  padding: 0.75rem 0.5rem !important;
   font: inherit;
-  color: var(--bnesta-deep-espresso);
-  font-size: 0.95rem;
+  color: var(--bnesta-deep-espresso) !important;
+  font-size: 0.95rem !important;
   outline: none;
+  letter-spacing: normal !important;
+  text-transform: none !important;
 }
 
 .footerEmailInput::placeholder {
-  color: var(--bnesta-deep-espresso);
-  opacity: 0.6;
-  letter-spacing: normal;
-  text-transform: none;
+  color: var(--bnesta-deep-espresso) !important;
+  opacity: 0.6 !important;
+  letter-spacing: normal !important;
+  text-transform: none !important;
+}
+
+.footerEmailInput.placeholder {
+  color: var(--bnesta-deep-espresso) !important;
 }
 
 .footerEmailInput.typing {
-  color: var(--bnesta-deep-espresso);
+  color: var(--bnesta-deep-espresso) !important;
 }
 
 .footerEmailInput.error {
-  color: rgba(200, 50, 50, 0.9);
-  border-bottom-color: rgba(200, 50, 50, 0.6);
+  color: rgba(200, 50, 50, 0.9) !important;
+  border-bottom-color: rgba(200, 50, 50, 0.6) !important;
+}
+
+.footerEmailInput.error::placeholder {
+  color: rgba(200, 50, 50, 0.7) !important;
 }
 
 .footerSubmitButton {
-  display: flex;
+  display: flex !important;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
-  padding: 0.5rem 1rem;
-  font-size: 0.95rem;
+  padding: 10px 20px !important;
+  font-size: 0.95rem !important;
   font-weight: 300;
   letter-spacing: -0.2px;
+  text-transform: none !important;
   cursor: pointer;
   transition: all 0.2s cubic-bezier(0.4,0,0.2,1);
-  background: var(--bnesta-ochre);
-  border: 1px solid var(--bnesta-ochre);
-  color: var(--bnesta-rice);
-  width: auto;
-  height: auto;
-  border-radius: 0;
+  background: var(--bnesta-ochre) !important;
+  border: 1px solid var(--bnesta-ochre) !important;
+  color: var(--bnesta-rice) !important;
+  width: auto !important;
+  height: auto !important;
+  border-radius: 0 !important;
   white-space: nowrap;
   flex-shrink: 0;
 }
@@ -227,9 +239,13 @@
   cursor: not-allowed;
 }
 
+.footerSubmitButton.enabled {
+  border: 1px solid var(--bnesta-ochre) !important;
+}
+
 .footerSubmitButton.enabled:hover {
-  background: var(--bnesta-ochre-120);
-  color: var(--bnesta-rice);
+  background: var(--bnesta-ochre-120) !important;
+  color: var(--bnesta-rice) !important;
 }
 
 .footerEmailForm .successMessage {

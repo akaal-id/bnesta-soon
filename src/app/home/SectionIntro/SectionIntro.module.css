@@ -1,3 +1,14 @@
+/* Transition Container */
+.transition {
+  width: 100%;
+  height: 1000px;
+  background: linear-gradient(
+    to bottom,
+    rgba(238, 236, 231, 0.1) 0%,
+    var(--bnesta-rice, #eeece7) 100%
+  );
+}
+
 .intro {
   position: relative;
   z-index: 2;
@@ -12,10 +23,36 @@
   box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08);
 }
 
+/* Container animations */
+.imageContainer,
+.titleContainer,
+.contentContainer,
+.bottomContainer {
+  opacity: 0;
+}
+
+.imageContainer.visible,
+.titleContainer.visible,
+.contentContainer.visible,
+.bottomContainer.visible {
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* Container 1: Image Carousel */
 .imageContainer {
   width: 100%;
-  max-width: 1440px;
+  max-width: 1200px;
   position: relative;
   padding: 0 24px;
 }
@@ -23,7 +60,7 @@
 .imageWrapper {
   width: 100%;
   height: 810px;
-  max-width: 1440px;
+  max-width: 1200px;
   /* aspect-ratio: 16 / 9;*/
   position: relative;
   overflow: hidden;
@@ -48,21 +85,11 @@
   height: 100%;
   object-fit: cover;
   object-position: center;
+  transition: transform 0.5s ease;
 }
 
-/* Ensure images cover container even when parallax scales them */
-/* Size image larger to account for parallax scale of 1.3 */
-.slideImage img {
-  width: 130% !important;
-  height: 130% !important;
-  object-fit: cover !important;
-  object-position: center !important;
-  /* Position to center the larger image */
-  position: absolute !important;
-  left: -15% !important;
-  top: -15% !important;
-  right: -15% !important;
-  bottom: -15% !important;
+.slideImage:hover {
+  transform: scale(1.05);
 }
 
 /* Image Navigation */
@@ -103,11 +130,11 @@
 /* Container 2: Title */
 .titleContainer {
   width: 100%;
-  max-width: 1440px;
+  max-width: 1200px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 4px;
+  gap:16px;
   padding: 0 24px;
 }
 
@@ -132,7 +159,7 @@
 /* Container 3: Content with three columns */
 .contentContainer {
   width: 100%;
-  max-width: 1440px;
+  max-width: 1200px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;
@@ -170,17 +197,17 @@
 /* Container 4: Bottom Text */
 .bottomContainer {
   width: 100%;
-  max-width: 1440px;
+  max-width: 1200px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 4px;
+  gap: 0px;
   padding: 0 24px;
 }
 
 .closing {
   font-family: var(--font-mulish, sans-serif);
-  font-size: 16px;
+  font-size: clamp(12px, 3vw, 24px);
   font-weight: 400;
   line-height: 1.6;
   color: var(--bnesta-volcanic, #2c2c2c);
@@ -189,7 +216,7 @@
 
 .opening {
   font-family: var(--font-mulish, sans-serif);
-  font-size: 16px;
+  font-size: clamp(12px, 3vw, 24px);
   font-weight: 600;
   line-height: 1.6;
   color: var(--bnesta-deep-espresso, #1a1a1a);

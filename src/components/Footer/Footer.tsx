@@ -16,9 +16,9 @@ import { EmailForm } from "@/components/EmailForm/EmailForm";
 const quickLinks = ["Featured Villa", "Common Spaces", "Read Journal"];
 const legalLinks = ["About BNesta", "Explore Gallery"];
 const ctaLinks = [
-  { Label: "BWorks" },
-  { Label: "BFriends" },
-  { Label: "BLive" }
+  { Label: "BWork", url: "https://www.bwork.id" },
+  { Label: "BFriends", url: "https://www.bfriends.id" },
+  { Label: "BLive", url: "https://www.BLive.id" }
 ];
 
 export function Footer() {
@@ -29,9 +29,8 @@ export function Footer() {
           Visit BLife Ecosystem
           <ChevronRight className="w-4 h-4" />
         </span>
-        <span className={styles.ctaLink}></span>
         {ctaLinks.map((link) => (
-          <a key={link.Label} href="#" className={styles.ctaLink}>
+          <a key={link.Label} href={link.url} className={styles.ctaLink} target="_blank" rel="noopener noreferrer">
             {link.Label}
           </a>
         ))}

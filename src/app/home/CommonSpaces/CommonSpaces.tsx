@@ -1,66 +1,19 @@
 "use client";
 
-import { useEffect, useRef } from "react";
 import Image from "next/image";
 import styles from "./CommonSpaces.module.css";
+import { useFadeInOnScroll } from "@/hooks/useFadeInOnScroll";
 
 export function CommonSpaces() {
-  const imageWrapperRef = useRef<HTMLDivElement | null>(null);
-  const parallaxInstancesRef = useRef<any[]>([]);
-
-  // Initialize parallax effect
-  useEffect(() => {
-    // Clean up existing parallax instances
-    parallaxInstancesRef.current.forEach((instance) => {
-      if (instance && typeof instance.destroy === "function") {
-        instance.destroy();
-      }
-    });
-    parallaxInstancesRef.current = [];
-
-    // Wait for images to be rendered, then initialize parallax
-    const timeoutId = setTimeout(async () => {
-      if (imageWrapperRef.current) {
-        // Dynamically import SimpleParallax only in the browser
-        // @ts-ignore - simple-parallax-js/vanilla doesn't have type definitions
-        const SimpleParallax = (await import("simple-parallax-js/vanilla")).default;
-        
-        // Query for img elements within the container (Next.js Image renders as img)
-        const imgElements = imageWrapperRef.current.querySelectorAll(
-          "img"
-        ) as NodeListOf<HTMLImageElement>;
-
-        imgElements.forEach((imgElement) => {
-          if (imgElement) {
-            const parallax = new SimpleParallax(imgElement, {
-              orientation: "up",
-              scale: 1.2,
-              delay: 4,
-            });
-            parallaxInstancesRef.current.push(parallax);
-          }
-        });
-      }
-    }, 100); // Small delay to ensure images are rendered
-
-    // Cleanup on unmount
-    return () => {
-      clearTimeout(timeoutId);
-      parallaxInstancesRef.current.forEach((instance) => {
-        if (instance && typeof instance.destroy === "function") {
-          instance.destroy();
-        }
-      });
-      parallaxInstancesRef.current = [];
-    };
-  }, []);
+  const { elementRef: imageColumnRef, isVisible: imageColumnVisible } = useFadeInOnScroll<HTMLDivElement>({ delay: 0 });
+  const { elementRef: textColumnRef, isVisible: textColumnVisible } = useFadeInOnScroll<HTMLDivElement>({ delay: 200 });
 
   return (
     <section className={styles.section}>
       <div className={styles.layout}>
         {/* Left: Large Image */}
-        <div className={styles.imageColumn}>
-          <div className={styles.mainMedia} ref={imageWrapperRef}>
+        <div ref={imageColumnRef} className={`${styles.imageColumn} ${imageColumnVisible ? styles.visible : ""}`}>
+          <div className={styles.mainMedia}>
             <Image
               src="/images/yoga1.png"
               alt="Yoga and meditation studio at BNesta"
@@ -68,13 +21,14 @@ export function CommonSpaces() {
               height={800}
               sizes="(max-width: 900px) 100vw, 60vw"
               priority
+              quality={95}
               className={styles.image}
             />
           </div>
         </div>
 
         {/* Right: Text Content */}
-        <div className={styles.textColumn}>
+        <div ref={textColumnRef} className={`${styles.textColumn} ${textColumnVisible ? styles.visible : ""}`}>
           <div className={styles.content}>
             <p className={styles.eyebrow}>THE EXPERIENCE</p>
             <h2 className={styles.title}>Effortless, Private Living</h2>

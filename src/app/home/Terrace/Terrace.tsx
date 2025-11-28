@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useRef } from "react";
 import Image from "next/image";
 import styles from "./Terrace.module.css";
 import buttonStyles from "@/components/Button/Button.module.css";
+import { useFadeInOnScroll } from "@/hooks/useFadeInOnScroll";
 
 const habits = [
   {
@@ -29,62 +29,16 @@ const habits = [
 ];
 
 export function Terrace() {
-  const imageWrapperRef = useRef<HTMLDivElement | null>(null);
-  const parallaxInstancesRef = useRef<any[]>([]);
-
-  // Initialize parallax effect
-  useEffect(() => {
-    // Clean up existing parallax instances
-    parallaxInstancesRef.current.forEach((instance) => {
-      if (instance && typeof instance.destroy === "function") {
-        instance.destroy();
-      }
-    });
-    parallaxInstancesRef.current = [];
-
-    // Wait for images to be rendered, then initialize parallax
-    const timeoutId = setTimeout(async () => {
-      if (imageWrapperRef.current) {
-        // Dynamically import SimpleParallax only in the browser
-        // @ts-ignore - simple-parallax-js/vanilla doesn't have type definitions
-        const SimpleParallax = (await import("simple-parallax-js/vanilla")).default;
-        
-        // Query for img elements within the container (Next.js Image renders as img)
-        const imgElements = imageWrapperRef.current.querySelectorAll(
-          "img"
-        ) as NodeListOf<HTMLImageElement>;
-
-        imgElements.forEach((imgElement) => {
-          if (imgElement) {
-            const parallax = new SimpleParallax(imgElement, {
-              orientation: "up",
-              scale: 1.2,
-              delay: 4,
-            });
-            parallaxInstancesRef.current.push(parallax);
-          }
-        });
-      }
-    }, 100); // Small delay to ensure images are rendered
-
-    // Cleanup on unmount
-    return () => {
-      clearTimeout(timeoutId);
-      parallaxInstancesRef.current.forEach((instance) => {
-        if (instance && typeof instance.destroy === "function") {
-          instance.destroy();
-        }
-      });
-      parallaxInstancesRef.current = [];
-    };
-  }, []);
+  const { elementRef: textColumnRef, isVisible: textColumnVisible } = useFadeInOnScroll<HTMLDivElement>({ delay: 0 });
+  const { elementRef: detailsRef, isVisible: detailsVisible } = useFadeInOnScroll<HTMLDivElement>({ delay: 150 });
+  const { elementRef: mainMediaRef, isVisible: mainMediaVisible } = useFadeInOnScroll<HTMLDivElement>({ delay: 300 });
 
   return (
     <section className={styles.section}>
       <div className={styles.container}>
         
         {/* --- LEFT COLUMN: Text Content --- */}
-        <div className={styles.textColumn}>
+        <div ref={textColumnRef as React.RefObject<HTMLDivElement>} className={`${styles.textColumn} ${textColumnVisible ? styles.visible : ""}`}>
           <p className={styles.introText}>
             BNesta is shaped to help guests naturally restore{" "}
             <strong>four simple daily habits</strong>. These habits unfold through
@@ -146,23 +100,26 @@ export function Terrace() {
 
         {/* --- RIGHT COLUMN: Title & Image --- */}
         <div className={styles.imageColumn}>
-          <div className={styles.details}>
-            <p className={styles.eyebrow}> outdoor sanctuary </p>
+          <div ref={detailsRef as React.RefObject<HTMLDivElement>} className={`${styles.details} ${detailsVisible ? styles.visible : ""}`}>
+            <p className={styles.eyebrow}> Daily Rhytm </p>
             <h3 className={styles.title}>
               A Space That Restores <br /> Your Daily Rhythm
             </h3>
           </div>
 
-          <div className={styles.mainMedia} ref={imageWrapperRef}>
-            <Image
-              src="/images/pool1.png"
-              alt="BNesta outdoor sanctuary"
-              width={576}
-              height={720}
-              sizes="(max-width: 900px) 100vw, 60vw"
-              priority
-              className={styles.image}
-            />
+          <div ref={mainMediaRef as React.RefObject<HTMLDivElement>} className={`${styles.mainMedia} ${mainMediaVisible ? styles.visible : ""}`}>
+            <div style={{ width: '100%', height: '100%', position: 'relative' }}>
+              <Image
+                src="/images/pool1.png"
+                alt="BNesta outdoor sanctuary"
+                width={576}
+                height={720}
+                sizes="(max-width: 900px) 100vw, 60vw"
+                priority
+                quality={95}
+                className={styles.image}
+              />
+            </div>
           </div>
         </div>
 
@@ -170,3 +127,4 @@ export function Terrace() {
     </section>
   );
 }
+

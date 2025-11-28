@@ -29,7 +29,19 @@ export function VillaCard({ villa, priority = false }: VillaCardProps) {
         <div className={styles.textOverlay}>
           <p className={styles.bedroomType}>{villa.bedroomType}</p>
           <h3 className={styles.villaName}>{villa.name}</h3>
-          <p className={styles.description}>{villa.description}</p>
+          <div className={styles.description}>
+            {villa.description.split(/\.\s+/).filter(sentence => sentence.trim()).map((sentence, index, array) => {
+              const trimmedSentence = sentence.trim();
+              const hasPeriod = trimmedSentence.endsWith('.');
+              return (
+                <span key={index}>
+                  {trimmedSentence}
+                  {!hasPeriod && '.'}
+                  {index < array.length - 1 && <br />}
+                </span>
+              );
+            })}
+          </div>
         </div>
       </div>
     </div>

@@ -8,10 +8,34 @@
   background: var(--bnesta-rice-40, #f5f3f0);
 }
 
+/* Container animations */
+.titleContainer,
+.imageContainer,
+.descriptionContainer {
+  opacity: 0;
+}
+
+.titleContainer.visible,
+.imageContainer.visible,
+.descriptionContainer.visible {
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* Container 1: Title */
 .titleContainer {
   width: 100%;
-  max-width: 1440px;
+  max-width: 1200px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -111,7 +135,7 @@
 /* Container 3: Description */
 .descriptionContainer {
   width: 100%;
-  max-width: 1440px;
+  max-width: 1200px;
   padding-top: 48px;
   padding-bottom: 144px;
   padding-left: 24px;
@@ -121,9 +145,8 @@
 }
 
 .textGrid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
+  display: block;
+  max-width: 100%;
 }
 
 .description {
@@ -135,6 +158,11 @@
   font-weight: 300;
   opacity: 0.9;
   text-align: justify;
+  text-indent: 2em;
+}
+
+.description strong {
+  font-weight: 700;
 }
 
 /* --- RESPONSIVE (Tablet) --- */
@@ -146,8 +174,7 @@
   }
 
   .textGrid {
-    grid-template-columns: 1fr;
-    gap: 2rem;
+    display: block;
   }
 }
 
@@ -168,8 +195,7 @@
   }
 
   .textGrid {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
+    display: block;
   }
 
   .heading {

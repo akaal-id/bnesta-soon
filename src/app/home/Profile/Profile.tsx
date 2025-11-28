@@ -5,10 +5,14 @@ import useEmblaCarousel from "embla-carousel-react";
 import styles from "./Profile.module.css";
 import { VillaCard } from "@/components/VillaCard/VillaCard";
 import { villaData } from "@/data/villaImages";
+import { useFadeInOnScroll } from "@/hooks/useFadeInOnScroll";
 
 const SLIDE_DURATION_MS = 5000; // 5 seconds
 
 export function Profile() {
+  const { elementRef: titleContainerRef, isVisible: titleContainerVisible } = useFadeInOnScroll<HTMLDivElement>({ delay: 0 });
+  const { elementRef: imageContainerRef, isVisible: imageContainerVisible } = useFadeInOnScroll<HTMLDivElement>({ delay: 150 });
+  const { elementRef: descriptionContainerRef, isVisible: descriptionContainerVisible } = useFadeInOnScroll<HTMLDivElement>({ delay: 300 });
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
   const [currentIndex, setCurrentIndex] = useState(0);
   const totalImages = villaData.length;
@@ -70,7 +74,7 @@ export function Profile() {
   return (
     <section className={styles.section}>
       {/* Container 1: Title */}
-      <div className={styles.titleContainer}>
+      <div ref={titleContainerRef} className={`${styles.titleContainer} ${titleContainerVisible ? styles.visible : ""}`}>
         <p className={styles.eyebrow}>YOUR HAVEN IS ALMOST THERE</p>
         <h2 className={styles.heading}>
           Five Villas, 
@@ -79,7 +83,7 @@ export function Profile() {
       </div>
 
       {/* Container 2: Image Carousel */}
-      <div className={styles.imageContainer}>
+      <div ref={imageContainerRef} className={`${styles.imageContainer} ${imageContainerVisible ? styles.visible : ""}`}>
         <div className={styles.imageWrapper} ref={emblaRef}>
           <div className={styles.emblaContainer}>
             {villaData.map((villa, index) => (
@@ -115,17 +119,10 @@ export function Profile() {
       </div>
 
       {/* Container 3: Description */}
-      <div className={styles.descriptionContainer}>
+      <div ref={descriptionContainerRef} className={`${styles.descriptionContainer} ${descriptionContainerVisible ? styles.visible : ""}`}>
         <div className={styles.textGrid}>
           <p className={styles.description}>
-            BNesta reflects Bali's natural character through wood, stone, and
-            soft neutral tones. These elements create a warm and grounded
-            atmosphere that feels familiar and easy.
-          </p>
-          <p className={styles.description}>
-            Large windows bring daylight into each villa, keeping the space
-            bright and calm throughout the day. The design reduces visual noise,
-            helping guests settle into a steady, comfortable rhythm.
+            Each of BNesta's five villas carries a different theme shaped by light, nature, or texture. <strong>This variety gives guests a sense of choice</strong> while keeping the brand philosophy simple and consistent. Natural materials such as wood and stone keep the villas warm and grounded. Wide windows bring in quiet daylight, and clean lines reduce visual noise so your mind settles easily.
           </p>
         </div>
       </div>
