@@ -11,12 +11,14 @@
 /* Container animations */
 .titleContainer,
 .imageContainer,
+.catalogContainer,
 .descriptionContainer {
   opacity: 0;
 }
 
 .titleContainer.visible,
 .imageContainer.visible,
+.catalogContainer.visible,
 .descriptionContainer.visible {
   animation: fadeIn 0.8s ease-out forwards;
 }
@@ -31,6 +33,27 @@
     transform: translateY(0);
   }
 }
+
+/* Catalog Content Fade Animation */
+.catalogContent {
+  width: 100%;
+  animation: fadeInContent 0.6s ease-out forwards;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+@keyframes fadeInContent {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 
 /* Container 1: Title */
 .titleContainer {
@@ -98,6 +121,39 @@
   overflow: hidden;
 }
 
+/* Main Carousel Navigation Arrows */
+.navButtonMain {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.7); /* Light, transparent color */
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 20;
+  transition: all 0.2s ease;
+  padding: 0;
+}
+
+.navButtonMain:hover {
+  color: rgba(255, 255, 255, 1);
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+}
+
+.navButtonMainLeft {
+  left: 24px;
+}
+
+.navButtonMainRight {
+  right: 24px;
+}
+
 /* Image Navigation */
 .imgNav {
   position: absolute;
@@ -130,6 +186,149 @@
 .imgNavActive:hover,
 .imgNavIdle:hover {
   opacity: 0.8;
+}
+
+/* Container 2.5: Gallery Catalog Slider */
+.catalogContainer {
+  width: 100vw; /* Full width */
+  padding: 48px 0 0 0; /* Remove side padding */
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.catalogHeader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  padding: 0 24px;
+  position: relative;
+}
+
+.catalogTitle {
+  font-family: var(--font-mulish, sans-serif);
+  font-size: clamp(12px, 3vw, 0.9rem);
+  letter-spacing: 0.6em;
+  text-transform: uppercase;
+  color: var(--bnesta-volcanic, #2c2c2c);
+  margin: 0;
+  text-align: center;
+}
+
+.catalogControls {
+  display: flex;
+  gap: 12px;
+}
+
+.navButton {
+  background: transparent;
+  border: 1px solid var(--bnesta-volcanic, #2c2c2c);
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--bnesta-volcanic, #2c2c2c);
+  transition: all 0.2s ease;
+  padding: 0;
+}
+
+.navButton:hover {
+  background: var(--bnesta-volcanic, #2c2c2c);
+  color: #fff;
+}
+
+.catalogSlider {
+  overflow: hidden;
+  width: 100%;
+  padding-left: 24px; /* Start slider with padding */
+}
+
+.catalogSliderContainer {
+  display: flex;
+  gap: 12px;
+}
+
+.catalogSlide {
+  flex: 0 0 20%; /* Changed from 30% to 20% to make images smaller (showing 5 images) */
+  min-width: 0;
+  position: relative;
+}
+
+.catalogItem {
+  position: relative;
+  width: 100%;
+  padding-bottom: 75%; /* 4:3 Aspect Ratio */
+  overflow: hidden;
+  border-radius: 2px;
+  background: var(--bnesta-rice-60, #f0eeeb);
+  cursor: pointer;
+}
+
+.catalogItem:active {
+  cursor: grabbing;
+}
+
+.catalogImage {
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.catalogItem:hover .catalogImage {
+  transform: scale(1.05);
+}
+
+/* Modal Styles */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.9);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.modalContent {
+  position: relative;
+  width: 90vw;
+  height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modalImageWrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.modalImage {
+  object-fit: contain;
+}
+
+.closeButton {
+  position: absolute;
+  top: -40px;
+  right: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 1010;
+  padding: 8px;
+  transition: transform 0.2s ease;
+}
+
+.closeButton:hover {
+  transform: scale(1.1);
 }
 
 /* Container 3: Description */
@@ -173,8 +372,17 @@
     padding-right: 24px;
   }
 
+  .catalogContainer {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
   .textGrid {
     display: block;
+  }
+  
+  .catalogSlide {
+    flex: 0 0 30%; /* Show about 3.3 images */
   }
 }
 
@@ -200,5 +408,45 @@
 
   .heading {
     font-size: clamp(2rem, 6vw, 3rem);
+  }
+
+  .catalogContainer {
+    padding-top: 24px;
+  }
+
+  /* Center align header contents on mobile */
+  .catalogHeader {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .catalogSlide {
+    flex: 0 0 60%; /* Show about 1.6 images on mobile */
+  }
+  
+  .catalogTitle {
+    font-size: 0.8rem; /* Decreased from 1.25rem to match typical eyebrow size on mobile */
+    letter-spacing: 0.4em; /* Slightly tighter spacing for mobile */
+  }
+  
+  .closeButton {
+    top: 10px;
+    right: 10px;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+  }
+  
+  /* Adjust nav buttons for mobile */
+  .navButtonMain {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .navButtonMainLeft {
+    left: 12px;
+  }
+  
+  .navButtonMainRight {
+    right: 12px;
   }
 }

@@ -2,6 +2,8 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
+import Image from "next/image";
+import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import styles from "./Profile.module.css";
 import { VillaCard } from "@/components/VillaCard/VillaCard";
 import { villaData } from "@/data/villaImages";
@@ -12,11 +14,38 @@ const SLIDE_DURATION_MS = 5000; // 5 seconds
 export function Profile() {
   const { elementRef: titleContainerRef, isVisible: titleContainerVisible } = useFadeInOnScroll<HTMLDivElement>({ delay: 0 });
   const { elementRef: imageContainerRef, isVisible: imageContainerVisible } = useFadeInOnScroll<HTMLDivElement>({ delay: 150 });
+  const { elementRef: catalogContainerRef, isVisible: catalogContainerVisible } = useFadeInOnScroll<HTMLDivElement>({ delay: 200 });
   const { elementRef: descriptionContainerRef, isVisible: descriptionContainerVisible } = useFadeInOnScroll<HTMLDivElement>({ delay: 300 });
+  
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
+  
+  // Initialize the catalog slider (gallery) with drag enabled and start alignment
+  const [catalogRef, catalogApi] = useEmblaCarousel({ 
+    align: "start", 
+    containScroll: "trimSnaps",
+    dragFree: true 
+  });
+
   const [currentIndex, setCurrentIndex] = useState(0);
-  const totalImages = villaData.length;
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const autoPlayIntervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Catalog navigation
+  const scrollCatalogPrev = useCallback(() => {
+    if (catalogApi) catalogApi.scrollPrev();
+  }, [catalogApi]);
+
+  const scrollCatalogNext = useCallback(() => {
+    if (catalogApi) catalogApi.scrollNext();
+  }, [catalogApi]);
+
+  // Main Carousel navigation
+  const scrollMainPrev = useCallback(() => {
+    if (emblaApi) {
+      emblaApi.scrollPrev();
+      startAutoPlay(); // Reset timer on manual interaction
+    }
+  }, [emblaApi]); 
 
   const onSelect = useCallback(() => {
     if (!emblaApi) return;
@@ -26,6 +55,8 @@ export function Profile() {
   // Start/reset auto-play timer
   const startAutoPlay = useCallback(() => {
     if (!emblaApi) return;
+    // Don't start autoplay if modal is open
+    if (selectedImage) return;
 
     // Clear existing interval
     if (autoPlayIntervalRef.current) {
@@ -36,7 +67,30 @@ export function Profile() {
     autoPlayIntervalRef.current = setInterval(() => {
       emblaApi.scrollNext();
     }, SLIDE_DURATION_MS);
-  }, [emblaApi]);
+  }, [emblaApi, selectedImage]);
+
+  const stopAutoPlay = useCallback(() => {
+    if (autoPlayIntervalRef.current) {
+      clearInterval(autoPlayIntervalRef.current);
+      autoPlayIntervalRef.current = null;
+    }
+  }, []);
+
+  // Main Carousel Navigation Wrappers that also handle autoplay reset
+  const handleMainPrev = useCallback(() => {
+    if (emblaApi) {
+      emblaApi.scrollPrev();
+      startAutoPlay();
+    }
+  }, [emblaApi, startAutoPlay]);
+
+  const handleMainNext = useCallback(() => {
+    if (emblaApi) {
+      emblaApi.scrollNext();
+      startAutoPlay();
+    }
+  }, [emblaApi, startAutoPlay]);
+
 
   useEffect(() => {
     if (!emblaApi) return;
@@ -71,6 +125,22 @@ export function Profile() {
     [emblaApi, currentIndex, startAutoPlay]
   );
 
+  const openModal = (src: string) => {
+    setSelectedImage(src);
+    stopAutoPlay();
+  };
+
+  const closeModal = () => {
+    setSelectedImage(null);
+  };
+
+  // Restart autoplay when modal closes
+  useEffect(() => {
+    if (!selectedImage && emblaApi) {
+      startAutoPlay();
+    }
+  }, [selectedImage, emblaApi, startAutoPlay]);
+
   return (
     <section className={styles.section}>
       {/* Container 1: Title */}
@@ -83,7 +153,14 @@ export function Profile() {
       </div>
 
       {/* Container 2: Image Carousel */}
-      <div ref={imageContainerRef} className={`${styles.imageContainer} ${imageContainerVisible ? styles.visible : ""}`}>
+      <div 
+        ref={imageContainerRef} 
+        className={`${styles.imageContainer} ${imageContainerVisible ? styles.visible : ""}`}
+        onMouseEnter={stopAutoPlay}
+        onMouseLeave={() => {
+          if (!selectedImage) startAutoPlay();
+        }}
+      >
         <div className={styles.imageWrapper} ref={emblaRef}>
           <div className={styles.emblaContainer}>
             {villaData.map((villa, index) => (
@@ -92,7 +169,24 @@ export function Profile() {
               </div>
             ))}
           </div>
-          {/* Image Navigation */}
+          
+          {/* Main Carousel Navigation Arrows */}
+          <button 
+            className={`${styles.navButtonMain} ${styles.navButtonMainLeft}`} 
+            onClick={handleMainPrev}
+            aria-label="Previous slide"
+          >
+            <ChevronLeft size={32} />
+          </button>
+          <button 
+            className={`${styles.navButtonMain} ${styles.navButtonMainRight}`} 
+            onClick={handleMainNext}
+            aria-label="Next slide"
+          >
+            <ChevronRight size={32} />
+          </button>
+
+          {/* Image Navigation Dots */}
           <div className={styles.imgNav}>
             {villaData.map((_, index) => (
               <div
@@ -118,6 +212,53 @@ export function Profile() {
         </div>
       </div>
 
+      {/* Container 2.5: Gallery Catalog Slider */}
+      <div 
+        ref={catalogContainerRef} 
+        className={`${styles.catalogContainer} ${catalogContainerVisible ? styles.visible : ""}`}
+        onMouseEnter={stopAutoPlay}
+        onMouseLeave={() => {
+          if (!selectedImage) startAutoPlay();
+        }}
+      >
+        <div key={currentIndex} className={styles.catalogContent}>
+          <div className={styles.catalogHeader}>
+            <h3 className={styles.catalogTitle}>
+              Another image of Villa {villaData[currentIndex].name}
+            </h3>
+            <div className={styles.catalogControls}>
+              <button onClick={scrollCatalogPrev} className={styles.navButton} aria-label="Previous images">
+                <ChevronLeft size={24} />
+              </button>
+              <button onClick={scrollCatalogNext} className={styles.navButton} aria-label="Next images">
+                <ChevronRight size={24} />
+              </button>
+            </div>
+          </div>
+
+          <div className={styles.catalogSlider} ref={catalogRef}>
+            <div className={styles.catalogSliderContainer}>
+              {villaData[currentIndex].gallery.slice(0, 10).map((src, index) => (
+                <div key={index} className={styles.catalogSlide}>
+                  <div 
+                    className={styles.catalogItem} 
+                    onClick={() => openModal(src)}
+                  >
+                    <Image
+                      src={src}
+                      alt={`${villaData[currentIndex].name} gallery image ${index + 1}`}
+                      fill
+                      className={styles.catalogImage}
+                      sizes="(max-width: 768px) 33vw, 20vw"
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Container 3: Description */}
       <div ref={descriptionContainerRef} className={`${styles.descriptionContainer} ${descriptionContainerVisible ? styles.visible : ""}`}>
         <div className={styles.textGrid}>
@@ -126,6 +267,26 @@ export function Profile() {
           </p>
         </div>
       </div>
+
+      {/* Image Modal */}
+      {selectedImage && (
+        <div className={styles.modalOverlay} onClick={closeModal}>
+          <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
+            <button className={styles.closeButton} onClick={closeModal}>
+              <X size={32} color="white" />
+            </button>
+            <div className={styles.modalImageWrapper}>
+              <Image
+                src={selectedImage}
+                alt="Selected gallery image"
+                fill
+                className={styles.modalImage}
+                quality={100}
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
