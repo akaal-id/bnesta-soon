@@ -101,7 +101,7 @@ export function Terrace() {
         {/* --- RIGHT COLUMN: Title & Image --- */}
         <div className={styles.imageColumn}>
           <div ref={detailsRef as React.RefObject<HTMLDivElement>} className={`${styles.details} ${detailsVisible ? styles.visible : ""}`}>
-            <p className={styles.eyebrow}> Daily Rhytm </p>
+            <p className={styles.eyebrow}> Daily Rhythm </p>
             <h3 className={styles.title}>
               A Space That Restores <br /> Your Daily Rhythm
             </h3>
