@@ -13,8 +13,8 @@ interface EmailFormProps {
 }
 
 const GOOGLE_FORM_URL =
-  "https://docs.google.com/forms/d/e/1FAIpQLSdorwvIaO5JtvI-bf6_6mg2cYPgOhLdPbbV5woYFxLfkXbCEw/formResponse";
-const ENTRY_ID = "entry.520712099";
+  "https://docs.google.com/forms/d/e/1FAIpQLSc54Kg9Yy-BSNMyEpEACSS1RzQumw_w_1XHZQEWli-tAiYHgQ/formResponse";
+const ENTRY_ID = "entry.38953877";
 
 export function EmailForm({
   placeholder = "Enter your email",
