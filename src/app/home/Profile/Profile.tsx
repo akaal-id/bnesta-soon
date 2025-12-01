@@ -18,26 +18,10 @@ export function Profile() {
   const { elementRef: descriptionContainerRef, isVisible: descriptionContainerVisible } = useFadeInOnScroll<HTMLDivElement>({ delay: 300 });
   
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
-  
-  // Initialize the catalog slider (gallery) with drag enabled and start alignment
-  const [catalogRef, catalogApi] = useEmblaCarousel({ 
-    align: "start", 
-    containScroll: "trimSnaps",
-    dragFree: true 
-  });
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const autoPlayIntervalRef = useRef<NodeJS.Timeout | null>(null);
-
-  // Catalog navigation
-  const scrollCatalogPrev = useCallback(() => {
-    if (catalogApi) catalogApi.scrollPrev();
-  }, [catalogApi]);
-
-  const scrollCatalogNext = useCallback(() => {
-    if (catalogApi) catalogApi.scrollNext();
-  }, [catalogApi]);
 
   // Main Carousel navigation
   const scrollMainPrev = useCallback(() => {
@@ -212,7 +196,7 @@ export function Profile() {
         </div>
       </div>
 
-      {/* Container 2.5: Gallery Catalog Slider */}
+      {/* Container 2.5: Gallery - Static 3 Images */}
       <div 
         ref={catalogContainerRef} 
         className={`${styles.catalogContainer} ${catalogContainerVisible ? styles.visible : ""}`}
@@ -226,35 +210,24 @@ export function Profile() {
             <h3 className={styles.catalogTitle}>
               Another image of Villa {villaData[currentIndex].name}
             </h3>
-            <div className={styles.catalogControls}>
-              <button onClick={scrollCatalogPrev} className={styles.navButton} aria-label="Previous images">
-                <ChevronLeft size={24} />
-              </button>
-              <button onClick={scrollCatalogNext} className={styles.navButton} aria-label="Next images">
-                <ChevronRight size={24} />
-              </button>
-            </div>
           </div>
 
-          <div className={styles.catalogSlider} ref={catalogRef}>
-            <div className={styles.catalogSliderContainer}>
-              {villaData[currentIndex].gallery.slice(0, 10).map((src, index) => (
-                <div key={index} className={styles.catalogSlide}>
-                  <div 
-                    className={styles.catalogItem} 
-                    onClick={() => openModal(src)}
-                  >
-                    <Image
-                      src={src}
-                      alt={`${villaData[currentIndex].name} gallery image ${index + 1}`}
-                      fill
-                      className={styles.catalogImage}
-                      sizes="(max-width: 768px) 33vw, 20vw"
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
+          <div className={styles.catalogGrid}>
+            {villaData[currentIndex].gallery.slice(0, 3).map((src, index) => (
+              <div 
+                key={index} 
+                className={styles.catalogItem} 
+                onClick={() => openModal(src)}
+              >
+                <Image
+                  src={src}
+                  alt={`${villaData[currentIndex].name} gallery image ${index + 1}`}
+                  fill
+                  className={styles.catalogImage}
+                  sizes="(max-width: 768px) 33vw, calc(33.333% - 16px)"
+                />
+              </div>
+            ))}
           </div>
         </div>
       </div>

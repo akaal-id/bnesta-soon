@@ -241,21 +241,14 @@
   color: #fff;
 }
 
-.catalogSlider {
-  overflow: hidden;
-  width: 100%;
-  padding-left: 24px; /* Start slider with padding */
-}
-
-.catalogSliderContainer {
-  display: flex;
+.catalogGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 12px;
-}
-
-.catalogSlide {
-  flex: 0 0 20%; /* Changed from 30% to 20% to make images smaller (showing 5 images) */
-  min-width: 0;
-  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
 }
 
 .catalogItem {
@@ -381,8 +374,9 @@
     display: block;
   }
   
-  .catalogSlide {
-    flex: 0 0 30%; /* Show about 3.3 images */
+  .catalogGrid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
   }
 }
 
@@ -420,8 +414,9 @@
     gap: 12px;
   }
 
-  .catalogSlide {
-    flex: 0 0 60%; /* Show about 1.6 images on mobile */
+  .catalogGrid {
+    grid-template-columns: 1fr;
+    gap: 12px;
   }
   
   .catalogTitle {
