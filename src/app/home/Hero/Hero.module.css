@@ -7,13 +7,13 @@
   overflow: hidden;
   color: var(--bnesta-rice);
   background-color: #000;
-  opacity: 0;
-  transition: opacity 1.6s ease, background-color 1.6s ease;
+  opacity: 1;
+  transition: background-color 1.6s ease;
   z-index: 0;
 }
 
 .ready {
-  opacity: 1;
+  /* Ready state - already visible */
 }
 
 .slideImage {
@@ -29,6 +29,14 @@
   will-change: opacity;
   z-index: 0;
   pointer-events: none;
+  /* Fix blurry images on iOS Safari */
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  image-rendering: high-quality;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
 }
 
 .slideImage.active {

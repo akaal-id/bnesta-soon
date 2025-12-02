@@ -60,6 +60,14 @@
   object-fit: cover;
   object-position: center center; /* Use the left part of the image */
   transition: transform 0.5s ease;
+  /* Fix blurry images on iOS Safari */
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  image-rendering: high-quality;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
 }
 
 .mainMedia:hover img,

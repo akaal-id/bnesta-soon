@@ -41,6 +41,12 @@ video {
   display: block;
   max-width: 100%;
   height: auto;
+  /* Fix blurry images on iOS Safari Retina displays */
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  image-rendering: high-quality;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
 a {

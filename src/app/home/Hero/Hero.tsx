@@ -16,39 +16,62 @@ const backgroundImages = [
   "/images/20251118_BVilla Interior_페이지_46_이미지_0002.webp",
   "/images/villa/alaswarna1.webp",
   "/images/villa/cahaya1.webp",
-  "/images/front1.webp",
   "/images/front2.webp",
   "/images/villa/mahakarya1.webp",
-  "/images/villa/Matahari1.webp",
   "/images/pool1.webp",
-  "/images/villa/svarga1.webp",
+  "/images/villa/Matahari1.webp",
   "/images/yoga1.webp",
+  "/images/villa/svarga1.webp"
+  
 ] as const;
 
 export function Hero() {
   const slides = useMemo(() => backgroundImages.filter(Boolean), []);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isReady, setIsReady] = useState(false);
+  const [loadedImages, setLoadedImages] = useState<Set<number>>(new Set([0])); // First image is considered loaded
   const eyebrowRef = useRef<HTMLParagraphElement>(null);
   const headlineRef = useRef<HTMLHeadingElement>(null);
   const subheadRef = useRef<HTMLParagraphElement>(null);
 
+  // Load first image immediately and start animations
   useEffect(() => {
-    // Preload all images
-    const loadPromises = slides.map((src) => {
-      return new Promise<string>((resolve, reject) => {
-        const img = new window.Image();
-        img.onload = () => resolve(src);
-        img.onerror = () => reject(src);
-        img.src = src;
-      });
-    });
-
-    Promise.allSettled(loadPromises).then(() => {
+    const firstImage = new window.Image();
+    firstImage.onload = () => {
       setIsReady(true);
-    });
+      setLoadedImages(new Set([0]));
+    };
+    firstImage.onerror = () => {
+      // Even if first image fails, show the section
+      setIsReady(true);
+      setLoadedImages(new Set([0]));
+    };
+    firstImage.src = slides[0];
   }, [slides]);
 
+  // Preload next image(s) as slider progresses
+  useEffect(() => {
+    if (!isReady || slides.length < 2) return;
+
+    // Preload current, next, and next+1 images
+    const imagesToPreload = [
+      currentSlide,
+      (currentSlide + 1) % slides.length,
+      (currentSlide + 2) % slides.length,
+    ];
+
+    imagesToPreload.forEach((index) => {
+      if (!loadedImages.has(index)) {
+        const img = new window.Image();
+        img.onload = () => {
+          setLoadedImages((prev) => new Set([...prev, index]));
+        };
+        img.src = slides[index];
+      }
+    });
+  }, [currentSlide, isReady, slides, loadedImages]);
+
+  // Start slider once first image is ready
   useEffect(() => {
     if (slides.length < 2 || !isReady) return;
 
@@ -128,17 +151,31 @@ export function Hero() {
 
   return (
     <section className={`${styles.hero} ${isReady ? styles.ready : ""}`}>
-      {slides.map((image, index) => (
-        <img
-          key={image}
-          src={image}
-          alt=""
-          className={`${styles.slideImage} ${
-            index === currentSlide ? styles.active : ""
-          }`}
-          loading={index === 0 ? "eager" : "lazy"}
-        />
-      ))}
+      {slides.map((image, index) => {
+        // Always render first image, and render current/next/previous slides
+        // Other images will be rendered as they're preloaded
+        const isFirstImage = index === 0;
+        const isCurrent = index === currentSlide;
+        const isNext = index === (currentSlide + 1) % slides.length;
+        const isPrevious = index === (currentSlide - 1 + slides.length) % slides.length;
+        const isLoaded = loadedImages.has(index);
+        
+        const shouldRender = isFirstImage || isCurrent || isNext || isPrevious || isLoaded;
+
+        if (!shouldRender) return null;
+
+        return (
+          <img
+            key={image}
+            src={image}
+            alt=""
+            className={`${styles.slideImage} ${
+              isCurrent ? styles.active : ""
+            }`}
+            loading={isFirstImage ? "eager" : "lazy"}
+          />
+        );
+      })}
       <div className={styles.topGradient} />
 
       <div className={styles.grid}>
@@ -149,6 +186,7 @@ export function Hero() {
               alt="BNesta monogram"
               fill
               sizes="160px"
+              quality={100}
               className={styles.brandImage}
             />
           </div>

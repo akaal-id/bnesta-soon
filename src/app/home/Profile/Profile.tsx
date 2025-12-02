@@ -225,6 +225,7 @@ export function Profile() {
                   fill
                   className={styles.catalogImage}
                   sizes="(max-width: 768px) 33vw, calc(33.333% - 16px)"
+                  quality={95}
                 />
               </div>
             ))}

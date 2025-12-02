@@ -21,6 +21,7 @@ export function VillaCard({ villa, priority = false }: VillaCardProps) {
           sizes="100vw"
           priority={priority}
           loading={priority ? undefined : "eager"}
+          quality={95}
         />
         {/* Gradient overlay for text readability */}
         <div className={styles.gradientOverlay} />
