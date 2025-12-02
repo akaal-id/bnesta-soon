@@ -10,10 +10,10 @@ import { EmailForm } from "@/components/EmailForm/EmailForm";
 const SLIDE_DURATION_MS = 3000;
 
 const backgroundImages = [
-  "/images/20251118_BVilla Interior_페이지_19_이미지_0002.webp",
-  "/images/20251118_BVilla Interior_페이지_26_이미지_0002.webp",
-  "/images/20251118_BVilla Interior_페이지_36_이미지_0002.webp",
-  "/images/20251118_BVilla Interior_페이지_46_이미지_0002.webp",
+  "/images/20251118_BVilla Interior_페이지_19_이미지_0002.webp",
+  "/images/20251118_BVilla Interior_페이지_26_이미지_0002.webp",
+  "/images/20251118_BVilla Interior_페이지_36_이미지_0002.webp",
+  "/images/20251118_BVilla Interior_페이지_46_이미지_0002.webp",
   "/images/villa/alaswarna1.webp",
   "/images/villa/cahaya1.webp",
   "/images/front2.webp",
@@ -22,7 +22,6 @@ const backgroundImages = [
   "/images/villa/Matahari1.webp",
   "/images/yoga1.webp",
   "/images/villa/svarga1.webp"
-  
 ] as const;
 
 export function Hero() {
@@ -173,6 +172,8 @@ export function Hero() {
               isCurrent ? styles.active : ""
             }`}
             loading={isFirstImage ? "eager" : "lazy"}
+            decoding="async"
+            fetchPriority={isFirstImage ? "high" : "auto"}
           />
         );
       })}

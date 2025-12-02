@@ -85,14 +85,14 @@
   object-fit: cover;
   object-position: right center; /* Use the left part of the image */
   transition: transform 0.5s ease;
-  /* Fix blurry images on iOS Safari */
-  image-rendering: -webkit-optimize-contrast;
-  image-rendering: crisp-edges;
-  image-rendering: high-quality;
+  /* Fix blurry images on iOS Safari Retina displays */
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
-  -webkit-transform: translateZ(0);
-  transform: translateZ(0);
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  image-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .mainMedia:hover img,
