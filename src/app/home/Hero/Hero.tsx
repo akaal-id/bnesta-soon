@@ -164,17 +164,23 @@ export function Hero() {
         if (!shouldRender) return null;
 
         return (
-          <img
+          <div
             key={image}
-            src={image}
-            alt=""
-            className={`${styles.slideImage} ${
+            className={`${styles.slideImageWrapper} ${
               isCurrent ? styles.active : ""
             }`}
-            loading={isFirstImage ? "eager" : "lazy"}
-            decoding="async"
-            fetchPriority={isFirstImage ? "high" : "auto"}
-          />
+          >
+            <Image
+              src={image}
+              alt=""
+              fill
+              className={styles.slideImage}
+              quality={100}
+              priority={isFirstImage}
+              sizes="100vw"
+              unoptimized={false}
+            />
+          </div>
         );
       })}
       <div className={styles.topGradient} />

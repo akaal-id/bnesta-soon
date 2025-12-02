@@ -52,6 +52,36 @@ video {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Fix for Next.js Image components on iOS */
+img[src*="/_next/image"] {
+  image-rendering: auto;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+
+/* Retina Display Support - High DPI images for crisp rendering on iPhone/iPad */
+@media only screen and (-webkit-min-device-pixel-ratio: 2),
+       only screen and (min-resolution: 192dpi),
+       only screen and (min-resolution: 2dppx) {
+  /* Ensure all images render at full quality on Retina displays */
+  img,
+  img[src*="/_next/image"] {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+  
+  /* Force high quality rendering for Next.js Image components */
+  img[src*="/_next/image"] {
+    image-rendering: auto;
+  }
+}
+
 a {
   color: inherit;
   text-decoration: none;

@@ -242,19 +242,22 @@
 }
 
 .catalogGrid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: flex;
+  flex-direction: row;
   gap: 12px;
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 24px;
+  justify-content: center;
+  align-items: stretch;
 }
 
 .catalogItem {
   position: relative;
-  width: 100%;
-  padding-bottom: 75%; /* 4:3 Aspect Ratio */
+  flex: 1;
+  min-width: 0;
+  aspect-ratio: 4 / 3;
   overflow: hidden;
   border-radius: 2px;
   background: var(--bnesta-rice-60, #f0eeeb);
@@ -266,16 +269,30 @@
 }
 
 .catalogImage {
-  object-fit: cover;
+  object-fit: cover !important;
+  object-position: center;
   transition: transform 0.5s ease;
   /* Fix blurry images on iOS Safari Retina displays */
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  -webkit-transform: translate3d(0, 0, 0);
-  transform: translate3d(0, 0, 0);
-  image-rendering: auto;
+  -webkit-backface-visibility: hidden !important;
+  backface-visibility: hidden !important;
+  -webkit-transform: translate3d(0, 0, 0) !important;
+  transform: translate3d(0, 0, 0) !important;
+  image-rendering: auto !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* Ensure Next.js Image renders at full quality */
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Retina Display Support for Gallery Images */
+@media only screen and (-webkit-min-device-pixel-ratio: 2),
+       only screen and (min-resolution: 192dpi),
+       only screen and (min-resolution: 2dppx) {
+  .catalogImage {
+    image-rendering: -webkit-optimize-contrast !important;
+    image-rendering: auto !important;
+  }
 }
 
 .catalogItem:hover .catalogImage {
@@ -391,8 +408,13 @@
   }
   
   .catalogGrid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
+    flex-direction: row;
+    gap: 8px;
+  }
+  
+  .catalogItem {
+    flex: 1;
+    min-width: 0;
   }
 }
 
@@ -431,8 +453,14 @@
   }
 
   .catalogGrid {
-    grid-template-columns: 1fr;
-    gap: 12px;
+    flex-direction: row;
+    gap: 8px;
+    padding: 0 16px;
+  }
+  
+  .catalogItem {
+    flex: 1;
+    min-width: 0;
   }
   
   .catalogTitle {

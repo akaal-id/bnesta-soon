@@ -112,12 +112,12 @@ export function Terrace() {
               <Image
                 src="/images/pool1.webp"
                 alt="BNesta outdoor sanctuary"
-                width={576}
-                height={720}
+                fill
                 sizes="(max-width: 900px) 100vw, 60vw"
                 priority
-                quality={95}
+                quality={100}
                 className={styles.image}
+                unoptimized={false}
               />
             </div>
           </div>

@@ -17,12 +17,12 @@ export function CommonSpaces() {
             <Image
               src="/images/yoga1.webp"
               alt="Yoga and meditation studio at BNesta"
-              width={1200}
-              height={800}
+              fill
               sizes="(max-width: 900px) 100vw, 60vw"
               priority
-              quality={95}
+              quality={100}
               className={styles.image}
+              unoptimized={false}
             />
           </div>
         </div>

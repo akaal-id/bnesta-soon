@@ -101,7 +101,8 @@ export function SectionIntro() {
                   className={styles.slideImage}
                   priority={index === 0}
                   sizes="(max-width: 1200px) 100vw, 1200px"
-                  quality={95}
+                  quality={100}
+                  unoptimized={false}
                 />
               </div>
             ))}

@@ -81,19 +81,29 @@
 }
 
 .slideImage {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
   object-position: center;
   transition: transform 0.5s ease;
   /* Fix blurry images on iOS Safari Retina displays */
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  -webkit-transform: translate3d(0, 0, 0);
-  transform: translate3d(0, 0, 0);
-  image-rendering: auto;
+  -webkit-backface-visibility: hidden !important;
+  backface-visibility: hidden !important;
+  -webkit-transform: translate3d(0, 0, 0) !important;
+  transform: translate3d(0, 0, 0) !important;
+  image-rendering: auto !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Retina Display Support for Section Intro Images */
+@media only screen and (-webkit-min-device-pixel-ratio: 2),
+       only screen and (min-resolution: 192dpi),
+       only screen and (min-resolution: 2dppx) {
+  .slideImage {
+    image-rendering: -webkit-optimize-contrast !important;
+    image-rendering: auto !important;
+  }
 }
 
 .slideImage:hover {

@@ -16,13 +16,11 @@
   /* Ready state - already visible */
 }
 
-.slideImage {
+.slideImageWrapper {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  display: block;
   opacity: 0;
   transition: opacity 1s ease-in-out;
   will-change: opacity;
@@ -33,15 +31,35 @@
   backface-visibility: hidden;
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
-  /* Use auto rendering for photos (not crisp-edges which is for pixel art) */
+}
+
+.slideImageWrapper.active {
+  opacity: 1;
+  z-index: 1;
+}
+
+.slideImage {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  /* Ensure crisp rendering on iOS */
   image-rendering: auto;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-.slideImage.active {
-  opacity: 1;
-  z-index: 1;
+/* Retina Display Support for Hero Images */
+@media only screen and (-webkit-min-device-pixel-ratio: 2),
+       only screen and (min-resolution: 192dpi),
+       only screen and (min-resolution: 2dppx) {
+  .slideImage {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: auto;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
 }
 
 .topGradient {

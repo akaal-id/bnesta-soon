@@ -6,8 +6,11 @@ const nextConfig: NextConfig = {
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     minimumCacheTTL: 60,
-    // Higher quality for better rendering on high-DPI displays (like iPhone Retina)
     dangerouslyAllowSVG: false,
+    // Ensure high quality for Retina displays
+    quality: 100,
+    // Disable image optimization for static images to prevent quality loss
+    unoptimized: false,
   },
 };
 
