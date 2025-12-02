@@ -15,7 +15,7 @@ export function CommonSpaces() {
         <div ref={imageColumnRef} className={`${styles.imageColumn} ${imageColumnVisible ? styles.visible : ""}`}>
           <div className={styles.mainMedia}>
             <Image
-              src="/images/yoga1.png"
+              src="/images/yoga1.webp"
               alt="Yoga and meditation studio at BNesta"
               width={1200}
               height={800}

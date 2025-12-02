@@ -10,19 +10,19 @@ import { EmailForm } from "@/components/EmailForm/EmailForm";
 const SLIDE_DURATION_MS = 3000;
 
 const backgroundImages = [
-  "/images/20251118_BVilla Interior_페이지_19_이미지_0002 1.png",
-  "/images/20251118_BVilla Interior_페이지_26_이미지_0002 1.png",
-  "/images/20251118_BVilla Interior_페이지_36_이미지_0002 1.png",
-  "/images/20251118_BVilla Interior_페이지_46_이미지_0002 1.png",
-  "/images/alaswarna1.png",
-  "/images/cahaya1.png",
-  "/images/front1.png",
-  "/images/front2.png",
-  "/images/mahakarya1.png",
-  "/images/Matahari1.png",
-  "/images/pool1.png",
-  "/images/svarga1.png",
-  "/images/yoga1.png",
+  "/images/20251118_BVilla Interior_페이지_19_이미지_0002.webp",
+  "/images/20251118_BVilla Interior_페이지_26_이미지_0002.webp",
+  "/images/20251118_BVilla Interior_페이지_36_이미지_0002.webp",
+  "/images/20251118_BVilla Interior_페이지_46_이미지_0002.webp",
+  "/images/villa/alaswarna1.webp",
+  "/images/villa/cahaya1.webp",
+  "/images/front1.webp",
+  "/images/front2.webp",
+  "/images/villa/mahakarya1.webp",
+  "/images/villa/Matahari1.webp",
+  "/images/pool1.webp",
+  "/images/villa/svarga1.webp",
+  "/images/yoga1.webp",
 ] as const;
 
 export function Hero() {

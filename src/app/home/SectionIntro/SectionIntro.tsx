@@ -9,8 +9,8 @@ import { useFadeInOnScroll } from "@/hooks/useFadeInOnScroll";
 const SLIDE_DURATION_MS = 5000; // 5 seconds
 
 const backgroundImages = [
-  /*"/images/front1.png",*/
-  "/images/front2.png",
+  /*"/images/front1.webp",*/
+  "/images/front2.webp",
 ] as const;
 
 // Metadata for SectionIntro

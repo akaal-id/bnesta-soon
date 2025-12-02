@@ -110,7 +110,7 @@ export function Terrace() {
           <div ref={mainMediaRef as React.RefObject<HTMLDivElement>} className={`${styles.mainMedia} ${mainMediaVisible ? styles.visible : ""}`}>
             <div style={{ width: '100%', height: '100%', position: 'relative' }}>
               <Image
-                src="/images/pool1.png"
+                src="/images/pool1.webp"
                 alt="BNesta outdoor sanctuary"
                 width={576}
                 height={720}
