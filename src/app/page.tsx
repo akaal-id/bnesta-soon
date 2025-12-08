@@ -4,9 +4,9 @@ import { StructuredData } from "@/components";
 import { Footer } from "@/components";
 
 export const metadata: Metadata = {
-  title: "BNesta | Will Open in January 2026 | Kerobokan, Bali",
+  title: "BNesta | Will Open in 2026 | Kerobokan, Bali",
   description:
-    "Private calm. Simple living. BNesta Villas in Kerobokan, Bali - Opening January 2026. Be at Ease. Be Authentic. Be at Your Nest.",
+    "Private calm. Simple living. BNesta Villas in Kerobokan, Bali - Opening 2026. Be at Ease. Be Authentic. Be at Your Nest.",
   keywords: [
     "BNesta",
     "Bali",
@@ -15,21 +15,35 @@ export const metadata: Metadata = {
     "Luxury",
     "Private",
     "Simple Living",
-    "January 2026",
+    "2026",
   ],
+  icons: {
+    icon: "/images/icon/onlyb.png",
+    apple: "/images/icon/onlyb.png",
+    shortcut: "/images/icon/onlyb.png",
+  },
   openGraph: {
-    title: "BNesta | Will Open in January 2026 | Kerobokan, Bali",
+    title: "BNesta | Will Open in 2026 | Kerobokan, Bali",
     description:
-      "Private calm. Simple living. BNesta Villas in Kerobokan, Bali - Opening January 2026.",
+      "Private calm. Simple living. BNesta Villas in Kerobokan, Bali - Opening 2026.",
     type: "website",
     locale: "en_US",
     siteName: "BNesta",
+    images: [
+      {
+        url: "/images/icon/onlyb.png",
+        width: 512,
+        height: 512,
+        alt: "BNesta Icon",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "BNesta | Will Open in January 2026 | Kerobokan, Bali",
+    title: "BNesta | Will Open in 2026 | Kerobokan, Bali",
     description:
-      "Private calm. Simple living. BNesta Villas in Kerobokan, Bali - Opening January 2026.",
+      "Private calm. Simple living. BNesta Villas in Kerobokan, Bali - Opening 2026.",
+    images: ["/images/icon/onlyb.png"],
   },
 };
 
@@ -59,7 +73,7 @@ const heroStructuredData = {
   "@context": "https://schema.org",
   "@type": "Hotel",
   "name": "BNesta Villas",
-  "description": "Private calm. Simple living. BNesta Villas in Kerobokan, Bali - Opening January 2026. Be at Ease. Be Authentic. Be at Your Nest.",
+  "description": "Private calm. Simple living. BNesta Villas in Kerobokan, Bali - Opening 2026. Be at Ease. Be Authentic. Be at Your Nest.",
   "address": {
     "@type": "PostalAddress",
     "streetAddress": "Jl. Tunjung I, Kerobokan Kelod",

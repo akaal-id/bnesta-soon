@@ -60,8 +60,8 @@ export const villaData: Villa[] = [
     ]
   },
   {
-    id: "mahakarya",
-    name: "Mahakarya",
+    id: "ONE",
+    name: "ONE",
     bedroomType: "2 BEDROOM",
     description: "Refined natural details. For cozy warmth and thoughtful, artful living.",
     image: "/images/villa/mahakarya1.webp",

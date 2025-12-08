@@ -22,7 +22,12 @@ export const metadata: Metadata = {
   description:
     "Immerse yourself in BNesta Villas—serene spaces in Canggu, Bali designed for rest, recovery, and belonging.",
   icons: {
-    icon: "/images/icon/onlyb.png",
+    icon: [
+      { url: "/images/icon/onlyb.png", sizes: "any" },
+      { url: "/images/icon/onlyb.png", type: "image/png" },
+    ],
+    apple: "/images/icon/onlyb.png",
+    shortcut: "/images/icon/onlyb.png",
   },
 };
 
