@@ -11,6 +11,7 @@ const SLIDE_DURATION_MS = 5000; // 5 seconds
 const backgroundImages = [
   /*"/images/front1.webp",*/
   "/images/front2.webp",
+  "/images/pool2.webp",
 ] as const;
 
 // Metadata for SectionIntro
