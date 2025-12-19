@@ -17,6 +17,9 @@ export const metadata: Metadata = {
     "Simple Living",
     "2026",
   ],
+  alternates: {
+    canonical: "https://www.bnesta.id",
+  },
   icons: {
     icon: "/images/icon/onlyb.png",
     apple: "/images/icon/onlyb.png",
@@ -29,6 +32,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     siteName: "BNesta",
+    url: "https://www.bnesta.id",
     images: [
       {
         url: "/images/icon/onlyb.png",

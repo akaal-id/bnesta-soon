@@ -18,6 +18,7 @@ const lora = Lora({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.bnesta.id"),
   title: "BNesta Villas | Be at Your Nest",
   description:
     "Immerse yourself in BNesta Villas—serene spaces in Canggu, Bali designed for rest, recovery, and belonging.",

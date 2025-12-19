@@ -19,6 +19,9 @@ export const metadata: Metadata = {
     "Simple Living",
     "January 2026",
   ],
+  alternates: {
+    canonical: "https://www.bnesta.id/home",
+  },
   openGraph: {
     title: "BNesta | Will Open in January 2026 | Kerobokan, Bali",
     description:
@@ -26,12 +29,22 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     siteName: "BNesta",
+    url: "https://www.bnesta.id/home",
+    images: [
+      {
+        url: "/images/icon/onlyb.png",
+        width: 512,
+        height: 512,
+        alt: "BNesta Icon",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "BNesta | Will Open in January 2026 | Kerobokan, Bali",
     description:
       "Private calm. Simple living. BNesta Villas in Kerobokan, Bali - Opening January 2026.",
+    images: ["/images/icon/onlyb.png"],
   },
 };
 
